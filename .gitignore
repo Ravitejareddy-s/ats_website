@@ -1,0 +1,9 @@
+# macOS
+.DS_Store
+
+# Editor/OS cruft
+*.log
+Thumbs.db
+
+# Temp preview artifacts
+_preview.html
