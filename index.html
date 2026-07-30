@@ -44,79 +44,69 @@
       min-height: 100vh;
       display: flex; flex-direction: column;
       position: relative; overflow-x: hidden;
-      background:
-        linear-gradient(180deg, var(--cream-1) 0%, var(--cream-2) 52%, var(--cream-3) 100%);
+      background: #ffffff;
     }
 
     /* subtle film grain for a tactile, premium surface */
     body::before {
       content: ""; position: fixed; inset: 0; z-index: 1; pointer-events: none;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
-      opacity: 0.045; mix-blend-mode: multiply;
+      opacity: 0.03; mix-blend-mode: multiply;
     }
 
     /* single warm light that follows the cursor (the "moving light") */
     .spotlight {
       position: fixed; top: 0; left: 0; z-index: 0; pointer-events: none;
-      width: 1300px; height: 1300px; will-change: transform;
-      transform: translate3d(calc(50vw - 650px), calc(22vh - 650px), 0);
+      width: 1000px; height: 1000px; will-change: transform;
+      transform: translate3d(calc(50vw - 500px), calc(20vh - 500px), 0);
       background: radial-gradient(circle,
-        rgba(230,160,80,0.30) 0%,
-        rgba(228,155,74,0.15) 32%,
-        rgba(224,150,66,0.05) 54%,
-        transparent 70%);
+        rgba(232,162,82,0.22) 0%,
+        rgba(230,158,78,0.10) 28%,
+        rgba(226,152,68,0.03) 48%,
+        transparent 62%);
     }
     /* brighter warm core of the light */
     .spotlight::before {
       content: ""; position: absolute; top: 50%; left: 50%;
-      width: 540px; height: 540px; transform: translate(-50%, -50%);
+      width: 430px; height: 430px; transform: translate(-50%, -50%);
       background: radial-gradient(circle,
-        rgba(255,226,168,0.55) 0%,
-        rgba(248,206,132,0.24) 16%,
-        transparent 42%);
+        rgba(255,224,164,0.42) 0%,
+        rgba(250,208,136,0.18) 18%,
+        transparent 44%);
     }
 
     /* silver skyline, warmed to a dusk tone; white knocked out via multiply */
     .skyline {
       position: fixed; left: 50%; bottom: 0; transform: translateX(-50%);
       width: min(1080px, 114vw); z-index: 0; pointer-events: none;
-      opacity: 0.46; mix-blend-mode: multiply;
-      filter: sepia(0.55) saturate(1.3) brightness(1.03) contrast(1.03);
+      opacity: 0.4; mix-blend-mode: multiply;
+      filter: grayscale(0.28) contrast(1.05) brightness(1.04);
       -webkit-user-select: none; user-select: none;
     }
     .skyline-fade {
       position: fixed; left: 0; right: 0; bottom: 0; height: 120px; z-index: 0; pointer-events: none;
-      background: linear-gradient(to top, var(--cream-3), transparent);
+      background: linear-gradient(to top, #ffffff, transparent);
     }
     /* soft reading pool behind the hero text (keeps copy crisp as the light moves) */
     .legibility {
       position: fixed; left: 50%; top: 44%; transform: translate(-50%, -50%);
       width: min(760px, 92vw); height: min(520px, 70vh); z-index: 1; pointer-events: none;
       background: radial-gradient(ellipse at center,
-        rgba(247,242,232,0.72) 0%, rgba(247,242,232,0.34) 50%, transparent 74%);
+        rgba(255,255,255,0.75) 0%, rgba(255,255,255,0.36) 50%, transparent 74%);
     }
 
     /* ---- Top bar ---- */
     .topbar {
       position: relative; z-index: 3;
-      display: flex; align-items: flex-start; justify-content: space-between;
-      padding: clamp(26px, 4vw, 40px) clamp(24px, 5vw, 66px) 0;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: clamp(20px, 3vw, 32px) clamp(24px, 5vw, 66px) 0;
     }
-    .wordmark {
-      font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800;
-      font-size: 1.6rem; letter-spacing: 0.5px; color: var(--ink); line-height: 1;
+    .brand { display: inline-flex; line-height: 0; }
+    .brand-logo {
+      height: 92px; width: auto; display: block;
+      mix-blend-mode: multiply; /* drops the logo's white background on the white page */
+      -webkit-user-select: none; user-select: none;
     }
-    .wordmark .tag {
-      display: block; margin-top: 8px;
-      font-family: 'Inter', sans-serif; font-weight: 500;
-      font-size: 0.62rem; letter-spacing: 3px; text-transform: uppercase; color: var(--faint);
-    }
-    .topbar .contact {
-      font-size: 0.78rem; letter-spacing: 0.4px; color: var(--ink-2);
-      text-decoration: none; padding-top: 6px; border-bottom: 1px solid transparent;
-      transition: border-color .25s ease, color .25s ease;
-    }
-    .topbar .contact:hover { color: var(--amber-dp); border-color: var(--amber); }
 
     /* ---- Hero ---- */
     .wrap {
@@ -162,8 +152,10 @@
     .btn {
       display: inline-flex; align-items: center; gap: 10px;
       padding: 16px 34px; border-radius: 999px;
+      border: 1.5px solid transparent;
       font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.9rem; letter-spacing: 0.4px;
-      text-decoration: none; transition: transform .22s ease, box-shadow .28s ease;
+      text-decoration: none; cursor: pointer;
+      transition: transform .22s ease, box-shadow .28s ease, background .25s ease, border-color .25s ease, color .25s ease;
     }
     .btn-primary {
       color: #fff8ef;
@@ -173,12 +165,17 @@
     .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 18px 40px rgba(165,101,27,0.36); }
     .btn-primary .arrow { transition: transform .25s ease; }
     .btn-primary:hover .arrow { transform: translateX(4px); }
-    .call {
-      font-size: 0.9rem; color: var(--ink-2); text-decoration: none;
-      border-bottom: 1px solid var(--line); padding-bottom: 3px;
-      transition: color .25s ease, border-color .25s ease;
+    .btn-outline {
+      color: var(--ink);
+      border-color: #d6d0c4;
+      background: rgba(255,255,255,0.7);
     }
-    .call:hover { color: var(--amber-dp); border-color: var(--amber); }
+    .btn-outline:hover {
+      transform: translateY(-2px);
+      border-color: var(--amber);
+      color: var(--amber-dp);
+      background: rgba(255,255,255,0.95);
+    }
 
     /* ---- Footer ---- */
     footer {
@@ -202,8 +199,7 @@
       .fade { opacity: 1; transform: none; }
     }
     @media (max-width: 620px) {
-      .topbar .contact { display: none; }
-      .wordmark { font-size: 1.4rem; }
+      .brand-logo { height: 66px; }
     }
   </style>
 </head>
@@ -214,10 +210,9 @@
   <div class="legibility" aria-hidden="true"></div>
 
   <header class="topbar">
-    <div class="wordmark fade">ATS
-      <span class="tag">Lighting &bull; Design &bull; Technical Services</span>
-    </div>
-    <a class="contact fade" href="mailto:info@atslightinc.com">info@atslightinc.com</a>
+    <a class="brand fade" href="/" aria-label="ATS — Ark Design Studio, Technical Services">
+      <img class="brand-logo" src="logo.jpg" alt="ATS — Ark Design Studio, Technical Services" />
+    </a>
   </header>
 
   <main class="wrap">
@@ -232,8 +227,8 @@
     </p>
 
     <div class="cta-row fade d4">
-      <a class="btn btn-primary" href="mailto:info@atslightinc.com">Get in touch <span class="arrow">&rarr;</span></a>
-      <a class="call" href="tel:+1000000000">or call us</a>
+      <a class="btn btn-primary" href="mailto:info@technicalservices.com">Get in touch <span class="arrow">&rarr;</span></a>
+      <a class="btn btn-outline" href="tel:+971586279497" aria-label="Call us at +971 58 627 9497">Call us</a>
     </div>
   </main>
 
@@ -249,9 +244,9 @@
     (function () {
       var el = document.getElementById('spotlight');
       if (!el) return;
-      var HALF = 650; // half of the 1300px light
+      var HALF = 500; // half of the 1000px light
       var targetX = window.innerWidth * 0.5;
-      var targetY = window.innerHeight * 0.22;
+      var targetY = window.innerHeight * 0.20;
       var curX = targetX, curY = targetY;
 
       function place(x, y) {
