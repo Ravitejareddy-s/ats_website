@@ -1,0 +1,5 @@
+# Files that should NOT be served publicly as part of the site
+.git
+.gitignore
+.assetsignore
+wrangler.jsonc

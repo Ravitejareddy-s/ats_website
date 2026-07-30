@@ -1,0 +1,10 @@
+{
+  // Tells `wrangler deploy` this is a static-assets site (no Worker script needed).
+  // The name must match your Cloudflare Worker project.
+  "name": "ats-website",
+  "compatibility_date": "2026-07-30",
+  "assets": {
+    // Serve the files in this repo's root directory (index.html, images, ...)
+    "directory": "./"
+  }
+}
