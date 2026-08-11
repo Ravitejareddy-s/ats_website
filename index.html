@@ -54,27 +54,6 @@
       opacity: 0.03; mix-blend-mode: multiply;
     }
 
-    /* single warm light that follows the cursor (the "moving light") */
-    .spotlight {
-      position: fixed; top: 0; left: 0; z-index: 0; pointer-events: none;
-      width: 1000px; height: 1000px; will-change: transform;
-      transform: translate3d(calc(50vw - 500px), calc(20vh - 500px), 0);
-      background: radial-gradient(circle,
-        rgba(232,162,82,0.22) 0%,
-        rgba(230,158,78,0.10) 28%,
-        rgba(226,152,68,0.03) 48%,
-        transparent 62%);
-    }
-    /* brighter warm core of the light */
-    .spotlight::before {
-      content: ""; position: absolute; top: 50%; left: 50%;
-      width: 430px; height: 430px; transform: translate(-50%, -50%);
-      background: radial-gradient(circle,
-        rgba(255,224,164,0.42) 0%,
-        rgba(250,208,136,0.18) 18%,
-        transparent 44%);
-    }
-
     /* silver skyline, warmed to a dusk tone; white knocked out via multiply */
     .skyline {
       /* skyline.jpg is a 1254x1254 square PNG whose artwork has ~320px of empty
@@ -207,7 +186,6 @@
   </style>
 </head>
 <body>
-  <div class="spotlight" id="spotlight" aria-hidden="true"></div>
   <img class="skyline" src="skyline.jpg" alt="" aria-hidden="true" />
   <div class="skyline-fade" aria-hidden="true"></div>
   <div class="legibility" aria-hidden="true"></div>
@@ -243,34 +221,6 @@
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Single warm light that eases toward the cursor
-    (function () {
-      var el = document.getElementById('spotlight');
-      if (!el) return;
-      var HALF = 500; // half of the 1000px light
-      var targetX = window.innerWidth * 0.5;
-      var targetY = window.innerHeight * 0.20;
-      var curX = targetX, curY = targetY;
-
-      function place(x, y) {
-        el.style.transform = 'translate3d(' + (x - HALF) + 'px,' + (y - HALF) + 'px,0)';
-      }
-      place(curX, curY);
-
-      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (reduce) return; // keep the light resting at top-center
-
-      window.addEventListener('mousemove', function (e) {
-        targetX = e.clientX; targetY = e.clientY;
-      }, { passive: true });
-
-      (function loop() {
-        curX += (targetX - curX) * 0.10;
-        curY += (targetY - curY) * 0.10;
-        place(curX, curY);
-        requestAnimationFrame(loop);
-      })();
-    })();
   </script>
 </body>
 </html>
