@@ -36,6 +36,13 @@ Files: `meanwell.png`, `leddomain.png`, `vossloh-schwabe.png`(+`.svg`), `tridoni
 - Sourcing gotchas for re-fetch: tridonic.com returns **403 to curl** — must load via Playwright real browser (logo = `/image/tridonic_logo.svg`). meanwell logo is only a **90x52 CSS bg** at `/styles/images/logo2.png` (low-res, white bg flood-filled). vossloh/tridonic came as SVG → rasterized to PNG with Playwright (`omit_background=True`, device_scale_factor=3). areej/mediclinic/tci/leddomain already had transparent PNGs on-site. Clearbit logo API is dead; Brandfetch CDN needs a key.
 - **Grid gotcha:** logo grids MUST use `repeat(N, minmax(0, 1fr))`, not `repeat(N, 1fr)`. `1fr` = min-content floor, and a wide unbreakable token (e.g. the non-breaking hyphen once in "Vossloh-Schwabe") blows the track past the viewport on mobile. minmax(0,1fr) caps it. Big wordmarks also get font-size reductions inside the `max-width: 560px` query.
 
+## Mobile nav drawer — the see-through/short-drawer trap (fixed, don't reintroduce)
+Symptom user hit: on mobile, AFTER SCROLLING, the open menu drawer went transparent and page text bled through it. Two compounding bugs, both from `.nav.scrolled` gaining `backdrop-filter`:
+1. **Nested backdrop-filter** — the drawer had its own `backdrop-filter` nested inside the scrolled nav's `backdrop-filter`; iOS/WebKit renders the inner one see-through. Fix: drawer is now a SOLID opaque `background:#f6f1e6` with NO backdrop-filter. Don't re-add blur to the drawer.
+2. **Containing-block trap** — `backdrop-filter` (like transform/filter) makes `.nav` the containing block for its `position:fixed` child `.nav-links`. So the old `inset:0 0 0 auto` (bottom:0) sized the drawer to the ~64px nav bar, not the viewport → short/mis-anchored drawer. Fix: drawer now uses `top:0; right:0; height:100dvh` (with `100vh` fallback) instead of relying on `bottom:0`. Keep it that way regardless of any nav backdrop-filter.
+- Also added: a `.nav-scrim` (`#navScrim`, z-index 45) that dims the page behind the drawer; JS toggles `.open` on it alongside the drawer + closes on scrim click. Drawer z-index 55, toggle/X z-index 60 (stays clickable above drawer). Mobile links are full-width rows w/ hairline dividers; Contact is a full-width amber pill.
+- **How to verify the drawer** (shoot.py doesn't open it): quick Playwright — viewport 390x844, `scrollTo(0,900)` to trigger `.nav.scrolled`, `click('#navToggle')`, screenshot, read it back. Must be opaque + full-height. The scroll step is essential; the bug ONLY appears once scrolled.
+
 ## Org chart = hand-built HTML (hard requirement)
 User explicitly forbade pasting it as an image. Structure: root node "A2S Technical Services" → dashed rail → 4 divisions:
 - Sales & Marketing → Marketing Team, Sales Engineer
