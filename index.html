@@ -128,7 +128,7 @@
       position: relative; min-height: 100vh; display: flex; flex-direction: column;
       align-items: center; justify-content: center; text-align: center;
       padding: 120px clamp(24px, 5vw, 40px) 120px;
-      background: linear-gradient(180deg, #ffffff 0%, var(--cream-1) 100%);
+      background: #ffffff;
       overflow: hidden;
     }
     .skyline {
@@ -140,7 +140,7 @@
     }
     .skyline-fade {
       position: absolute; left: 0; right: 0; bottom: 0; height: 130px; z-index: 1; pointer-events: none;
-      background: linear-gradient(to top, var(--cream-1), transparent);
+      background: linear-gradient(to top, #ffffff, transparent);
     }
     .legibility {
       position: absolute; left: 50%; top: 46%; transform: translate(-50%, -50%);
@@ -216,7 +216,8 @@
 
     /* ============ SECTION SHELL ============ */
     section { position: relative; z-index: 2; }
-    .section-pad { padding: clamp(72px, 11vw, 130px) 0; }
+    .section-pad { padding: clamp(64px, 8.5vw, 108px) 0; }
+    .section-pad-sm { padding: clamp(48px, 6vw, 80px) 0; }
     .bg-cream { background: var(--cream-1); }
     .bg-cream-2 { background: linear-gradient(180deg, var(--cream-1), var(--cream-2)); }
     .bg-white { background: #ffffff; }
@@ -229,6 +230,8 @@
 
     .section-head { max-width: 760px; margin-bottom: clamp(38px, 6vw, 64px); }
     .section-head.center { margin-left: auto; margin-right: auto; text-align: center; }
+    .section-head.compact { margin-bottom: clamp(30px, 4vw, 46px); }
+    .section-head.compact h2 { font-size: clamp(1.65rem, 3.6vw, 2.35rem); }
     .kicker {
       display: inline-flex; align-items: center; gap: 10px;
       font-size: 0.7rem; font-weight: 600; letter-spacing: 3.5px; text-transform: uppercase;
@@ -258,9 +261,11 @@
     }
     .mv-stack { display: flex; flex-direction: column; gap: 20px; }
     .mv-card {
-      background: #fff; border: 1px solid var(--line); border-radius: 18px;
-      padding: 28px 28px; box-shadow: 0 18px 44px rgba(70,58,42,0.06); position: relative; overflow: hidden;
+      background: #fff; border: 1px solid rgba(70,58,42,0.10); border-radius: 20px;
+      padding: 28px 30px; box-shadow: 0 14px 34px -18px rgba(70,58,42,0.24); position: relative; overflow: hidden;
+      transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
     }
+    .mv-card:hover { transform: translateY(-4px); box-shadow: 0 26px 50px -22px rgba(70,58,42,0.28); border-color: rgba(201,133,47,0.3); }
     .mv-card::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: linear-gradient(var(--amber-hi), var(--amber-dp)); }
     .mv-card h3 {
       font-family: 'Bricolage Grotesque', sans-serif; font-size: 1.2rem; color: var(--ink);
@@ -270,12 +275,19 @@
     .mv-card p { font-size: 0.97rem; line-height: 1.7; color: var(--body); }
 
     /* ============ SERVICES ============ */
-    .svc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 20px; }
+    .svc-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; counter-reset: svc; }
     .svc-card {
-      background: rgba(255,255,255,0.6); border: 1px solid var(--line); border-radius: 18px;
-      padding: 30px 26px; transition: transform .3s ease, box-shadow .3s ease, background .3s ease, border-color .3s ease;
+      flex: 1 1 300px; max-width: 344px; position: relative; counter-increment: svc;
+      background: #fff; border: 1px solid rgba(70,58,42,0.10); border-radius: 20px;
+      padding: 32px 28px 30px; box-shadow: 0 12px 30px -18px rgba(70,58,42,0.30);
+      transition: transform .32s cubic-bezier(.2,.7,.2,1), box-shadow .32s ease, border-color .32s ease;
     }
-    .svc-card:hover { transform: translateY(-6px); background: #fff; box-shadow: 0 26px 50px rgba(70,58,42,0.10); border-color: rgba(201,133,47,0.35); }
+    .svc-card::before {
+      content: "0" counter(svc); position: absolute; top: 28px; right: 28px;
+      font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 0.95rem;
+      color: rgba(201,133,47,0.36); letter-spacing: 0.5px;
+    }
+    .svc-card:hover { transform: translateY(-6px); box-shadow: 0 30px 56px -22px rgba(70,58,42,0.32); border-color: rgba(201,133,47,0.4); }
     .svc-ic {
       width: 54px; height: 54px; border-radius: 14px; display: grid; place-items: center; margin-bottom: 20px;
       background: linear-gradient(140deg, rgba(226,160,76,0.16), rgba(165,101,27,0.10));
@@ -289,15 +301,16 @@
     .logo-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 18px; }
     .logo-grid.clients { grid-template-columns: repeat(5, minmax(0, 1fr)); }
     .logo-tile {
-      aspect-ratio: 5 / 3; border-radius: 16px; display: grid; place-items: center; padding: 22px 18px;
-      background: rgba(255,255,255,0.55); border: 1px solid var(--line);
-      transition: transform .3s ease, box-shadow .3s ease, background .3s ease, border-color .3s ease, filter .3s ease;
-      filter: grayscale(1); opacity: 0.9;
+      aspect-ratio: 5 / 3; border-radius: 16px; display: grid; place-items: center; padding: 22px 20px;
+      background: #fff; border: 1px solid rgba(70,58,42,0.09);
+      box-shadow: 0 10px 26px -18px rgba(70,58,42,0.30);
+      transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease, filter .3s ease, opacity .3s ease;
+      filter: grayscale(1); opacity: 0.72;
     }
     .bg-ink .logo-tile { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.10); }
     .logo-tile:hover {
       transform: translateY(-5px); filter: grayscale(0); opacity: 1;
-      background: #fff; box-shadow: 0 22px 44px rgba(70,58,42,0.12); border-color: rgba(201,133,47,0.4);
+      background: #fff; box-shadow: 0 24px 46px -20px rgba(70,58,42,0.34); border-color: rgba(201,133,47,0.4);
     }
     .bg-ink .logo-tile:hover { background: rgba(255,255,255,0.06); box-shadow: 0 22px 44px rgba(0,0,0,0.35); }
 
@@ -424,13 +437,13 @@
     /* ============ CONTACT ============ */
     .offices-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
     .office-card {
-      background: #fff; border: 1px solid var(--line); border-radius: 18px;
-      padding: 30px 26px 28px; box-shadow: 0 18px 44px rgba(70,58,42,0.06);
+      background: #fff; border: 1px solid rgba(70,58,42,0.10); border-radius: 20px;
+      padding: 30px 28px 28px; box-shadow: 0 14px 34px -18px rgba(70,58,42,0.24);
       position: relative; overflow: hidden; display: flex; flex-direction: column;
       transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
     }
     .office-card::before { content: ""; position: absolute; left: 0; top: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--amber-hi), var(--amber-dp)); }
-    .office-card:hover { transform: translateY(-6px); box-shadow: 0 28px 54px rgba(70,58,42,0.12); border-color: rgba(201,133,47,0.35); }
+    .office-card:hover { transform: translateY(-6px); box-shadow: 0 30px 56px -22px rgba(70,58,42,0.30); border-color: rgba(201,133,47,0.4); }
     .office-card .ic {
       width: 46px; height: 46px; border-radius: 12px; display: grid; place-items: center; margin-bottom: 18px;
       background: linear-gradient(135deg, var(--amber-hi), var(--amber-dp)); color: #fff8ef;
@@ -449,8 +462,8 @@
     /* shared email + CTA bar */
     .contact-extra {
       margin-top: 26px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
-      gap: 20px 28px; background: rgba(255,255,255,0.6); border: 1px solid var(--line);
-      border-radius: 18px; padding: 24px 30px;
+      gap: 20px 28px; background: #fff; border: 1px solid rgba(70,58,42,0.10);
+      border-radius: 20px; padding: 26px 30px; box-shadow: 0 14px 34px -18px rgba(70,58,42,0.20);
     }
     .contact-extra .emails { display: flex; gap: 16px; align-items: flex-start; }
     .contact-extra .emails .ic {
@@ -642,9 +655,9 @@
   </section>
 
   <!-- ===================== BRANDS WE USE ===================== -->
-  <section class="section-pad bg-white" id="brands">
+  <section class="section-pad-sm bg-white" id="brands">
     <div class="container">
-      <div class="section-head center reveal">
+      <div class="section-head center compact reveal">
         <div class="kicker" style="justify-content:center;"><span class="rule"></span> Brands We Use <span class="rule"></span></div>
         <h2>Engineered with <span class="accent">trusted</span> components.</h2>
         <p>We build on proven lighting technology : drivers, modules and power supplies from established global manufacturers.</p>
@@ -661,9 +674,9 @@
   </section>
 
   <!-- ===================== OUR CLIENTS ===================== -->
-  <section class="section-pad bg-cream-2" id="clients">
+  <section class="section-pad-sm bg-cream-2" id="clients">
     <div class="container">
-      <div class="section-head center reveal">
+      <div class="section-head center compact reveal">
         <div class="kicker" style="justify-content:center;"><span class="rule"></span> Our Clients <span class="rule"></span></div>
         <h2>Trusted by teams who <span class="accent">build</span>.</h2>
         <p>A growing roster of developers, contractors and specialists across the UAE.</p>

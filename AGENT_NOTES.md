@@ -13,6 +13,15 @@ Sections in order: nav → hero → about → mission/vision → services → br
 - Fonts: Bricolage Grotesque (headings), Fraunces italic (accent), Inter (body).
 - Assets committed at root: `logo.jpg`, `skyline.jpg`.
 - We deliberately kept the softer amber aesthetic instead of the PDF's brighter orange (`#f26a21`) for cohesion.
+- **Hero bg is now PURE WHITE** (`#ffffff`), per user — was a cream gradient. `.skyline-fade` fades to white too. The skyline reads as a soft grey silhouette on white. Content/copy of hero is unchanged (user said "details are right").
+
+## "Sleek, not PowerPoint" redesign pass (user asked to de-slide the non-hero sections)
+The old sections felt like slides: faint ghost cards (`rgba(255,255,255,0.6)` + `var(--line)` border), a 5-card Services grid that orphaned card #5, near-invisible logo tiles, and very airy `section-pad`. Fixes now in place — keep them:
+- **Cards** (`.svc-card`, `.mv-card`, `.office-card`, `.contact-extra`, `.logo-tile`): solid `#fff`, `1px solid rgba(70,58,42,0.10)` border, layered `box-shadow: 0 14px 34px -18px rgba(...)`, radius 20. All lift on hover. Don't revert to translucent fills — that's what made them look like slide clip-art.
+- **Services** = flexbox `justify-content:center` with `.svc-card { flex:1 1 300px; max-width:344px }` → renders 3 + 2 (centered) on desktop, no orphan; wraps to 2 then 1 on smaller screens automatically (no media queries needed). Editorial index numbers `01`–`05` come from a CSS counter on `.svc-grid`/`.svc-card::before` (NOT in HTML — don't add number markup).
+- **Brands + Clients** are now compact "logo strip" sections: `section-pad-sm` + `.section-head.compact` (smaller h2) so they read as supporting proof, not full title slides. Logo tiles are crisp white w/ shadow, still grayscale→color on hover (default `opacity:0.72`).
+- **Spacing**: global `.section-pad` tightened to `clamp(64px,8.5vw,108px)`; added `.section-pad-sm = clamp(48px,6vw,80px)`.
+- Org section left structurally as-is (hard requirement); it's the dark section and looks intentional despite the Project-Division-is-tall imbalance.
 
 ## Brands / clients logo walls = REAL logos now wired in (was CSS wordmarks)
 The `#brands` and `#clients` `.logo-grid`s in `index.html` now use real `<img class="logo-img" src="logos/...">` (transparent PNGs from `./logos/`), NOT the old CSS wordmarks. The `.logo-tile` grayscale-to-color-on-hover treatment is unchanged and unifies them. Verified on desktop 1366 + mobile 390 (2-col, no overflow).
@@ -46,6 +55,8 @@ Three offices as `.office-card`s in an `.offices-grid` (3-col desktop → 2-col 
 - `shoot.py` = Playwright screenshot tool. **This is the only way to know whether the layout/alignment is actually correct.** You are editing a raw HTML/CSS file blind — you cannot tell if tiles overflow, connectors line up, or sections render right just by reading the code. You MUST run this script, then read the generated PNGs back into your own context and visually inspect them before claiming anything is aligned/done. The mobile brands-grid overflow (see logo-grid gotcha above) was invisible in the code and only caught this way.
 - Run: `python3 agent-scripts/shoot.py <tag> <width>` — e.g. `python3 agent-scripts/shoot.py desktop 1366` and `python3 agent-scripts/shoot.py mobile 390`.
 - Output → `agent-scripts/shots/{tag}-{section}.png` per section + `{tag}-full.png`. That `shots/` subfolder is gitignored (throwaway); the script itself is committed so future sessions inherit it.
+- **8000px guard (don't undo this):** the model's image reader rejects any PNG whose W or H exceeds 8000px. The old script used `device_scale_factor=2` on a `full_page` shot → tall pages produced >8000px images and EVERY read failed. Current script: section shots stay at scale 2 (sections are short; a too-tall one gets tiled), and the `{tag}-full.png` pass measures page height first and picks a fractional `device_scale_factor` so no side exceeds `MAX_PX=7600`. So the full shot is intentionally lower-res on tall pages — that's expected, use section shots for detail.
+- The full-page pass also force-reveals all `.reveal`/`.fade` elements (adds `.in` + injects an `!important` opacity/transform override) before shooting, else below-the-fold sections screenshot blank (reveal-on-scroll didn't fire during the fast auto-scroll).
 
 ## source-material/ (gitignored + assetsignored — NOT committed, NOT served)
 - `A2S PDF (1).pdf` = company profile, source of truth for all copy.
