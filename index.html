@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ATS — Lighting, Design &amp; Technical Services | Coming Soon</title>
-  <meta name="description" content="ATS — lighting, design and technical services that give every space its glow. Our new website is launching soon." />
+  <title>ATS — Lighting, Design &amp; Technical Services | Sharjah, UAE</title>
+  <meta name="description" content="A2S Technical Services (ATS) — architectural, decorative, facade, landscape and industrial lighting. Design, supply and technical execution from concept to completion. Based in Sharjah, UAE." />
   <meta name="theme-color" content="#f2ebdd" />
 
   <meta property="og:title" content="ATS — Lighting, Design & Technical Services" />
-  <meta property="og:description" content="Lighting, design & technical services that give every space its glow. New website launching soon." />
+  <meta property="og:description" content="Lighting, design & technical services that give every space its glow. Architectural, decorative, facade, landscape & industrial lighting." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://www.atslightinc.com/" />
   <meta property="og:image" content="https://www.atslightinc.com/logo.jpg" />
@@ -16,7 +16,7 @@
   <link rel="icon" href="logo.jpg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400;1,9..144,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400;1,9..144,500;1,9..144,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
   <style>
     :root {
@@ -33,6 +33,8 @@
       --amber-hi: #e2a04c;
       --amber:    #c9852f;
       --amber-dp: #a5651b;
+
+      --maxw: 1160px;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -41,66 +43,117 @@
     body {
       font-family: 'Inter', system-ui, -apple-system, sans-serif;
       color: var(--body);
-      min-height: 100vh;
-      display: flex; flex-direction: column;
       position: relative; overflow-x: hidden;
       background: #ffffff;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* subtle film grain for a tactile, premium surface */
+    /* subtle film grain for a tactile, premium surface (over whole page) */
     body::before {
-      content: ""; position: fixed; inset: 0; z-index: 1; pointer-events: none;
+      content: ""; position: fixed; inset: 0; z-index: 40; pointer-events: none;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
-      opacity: 0.03; mix-blend-mode: multiply;
+      opacity: 0.028; mix-blend-mode: multiply;
     }
 
-    /* silver skyline, warmed to a dusk tone; white knocked out via multiply */
+    a { color: inherit; }
+    img { max-width: 100%; display: block; }
+
+    .container { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 clamp(22px, 5vw, 48px); }
+
+    /* ============ NAV ============ */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px clamp(20px, 5vw, 56px);
+      background: rgba(255,255,255,0);
+      transition: background .35s ease, box-shadow .35s ease, padding .35s ease, border-color .35s ease;
+      border-bottom: 1px solid transparent;
+    }
+    .nav.scrolled {
+      background: rgba(250,247,240,0.82);
+      -webkit-backdrop-filter: saturate(150%) blur(14px);
+      backdrop-filter: saturate(150%) blur(14px);
+      box-shadow: 0 8px 30px rgba(70,58,42,0.07);
+      border-bottom: 1px solid var(--line);
+      padding-top: 8px; padding-bottom: 8px;
+    }
+    .nav .brand { display: inline-flex; line-height: 0; }
+    .nav .brand img {
+      height: 60px; width: auto; mix-blend-mode: multiply;
+      transition: height .35s ease;
+      -webkit-user-select: none; user-select: none;
+    }
+    .nav.scrolled .brand img { height: 48px; }
+    .nav-links { display: flex; align-items: center; gap: clamp(14px, 2vw, 30px); }
+    .nav-links a {
+      font-size: 0.86rem; font-weight: 500; letter-spacing: 0.2px; color: var(--ink-2);
+      text-decoration: none; position: relative; padding: 6px 2px;
+      transition: color .2s ease;
+    }
+    .nav-links a::after {
+      content: ""; position: absolute; left: 0; bottom: 0; height: 2px; width: 0;
+      background: linear-gradient(90deg, var(--amber-hi), var(--amber-dp)); transition: width .25s ease;
+    }
+    .nav-links a:hover { color: var(--amber-dp); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-links .nav-cta {
+      padding: 9px 20px; border-radius: 999px; color: #fff8ef;
+      background: linear-gradient(135deg, var(--amber-hi), var(--amber) 48%, var(--amber-dp));
+      box-shadow: 0 8px 20px rgba(165,101,27,0.24);
+    }
+    .nav-links .nav-cta::after { display: none; }
+    .nav-links .nav-cta:hover { color: #fff8ef; transform: translateY(-1px); }
+    .nav-toggle { display: none; background: none; border: 0; cursor: pointer; padding: 8px; }
+    .nav-toggle span { display: block; width: 24px; height: 2px; background: var(--ink); margin: 5px 0; border-radius: 2px; transition: .3s; }
+
+    @media (max-width: 860px) {
+      .nav-toggle { display: block; z-index: 60; }
+      .nav-links {
+        position: fixed; inset: 0 0 0 auto; width: min(78vw, 320px);
+        flex-direction: column; align-items: flex-start; justify-content: center; gap: 26px;
+        background: rgba(250,247,240,0.97);
+        -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
+        padding: 40px 42px; box-shadow: -20px 0 60px rgba(70,58,42,0.12);
+        transform: translateX(105%); transition: transform .4s cubic-bezier(.4,0,.2,1);
+      }
+      .nav-links.open { transform: translateX(0); }
+      .nav-links a { font-size: 1.1rem; }
+      .nav.open .nav-toggle span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+      .nav.open .nav-toggle span:nth-child(2) { opacity: 0; }
+      .nav.open .nav-toggle span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    }
+
+    /* ============ HERO ============ */
+    .hero {
+      position: relative; min-height: 100vh; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; text-align: center;
+      padding: 120px clamp(24px, 5vw, 40px) 120px;
+      background: linear-gradient(180deg, #ffffff 0%, var(--cream-1) 100%);
+      overflow: hidden;
+    }
     .skyline {
-      /* skyline.jpg is a 1254x1254 square PNG whose artwork has ~320px of empty
-         space below it. translateY(25.5%) drops that gap off-screen so the base
-         of the buildings sits flush on the bottom edge. */
-      position: fixed; left: 50%; bottom: 0; transform: translate(-50%, 25.5%);
-      width: min(1080px, 114vw); z-index: 0; pointer-events: none;
+      position: absolute; left: 50%; bottom: -2px; transform: translate(-50%, 24%);
+      width: min(1080px, 128vw); z-index: 0; pointer-events: none;
       opacity: 0.4; mix-blend-mode: multiply;
       filter: grayscale(0.28) contrast(1.05) brightness(1.04);
       -webkit-user-select: none; user-select: none;
     }
     .skyline-fade {
-      position: fixed; left: 0; right: 0; bottom: 0; height: 120px; z-index: 0; pointer-events: none;
-      background: linear-gradient(to top, #ffffff, transparent);
+      position: absolute; left: 0; right: 0; bottom: 0; height: 130px; z-index: 1; pointer-events: none;
+      background: linear-gradient(to top, var(--cream-1), transparent);
     }
-    /* soft reading pool behind the hero text (keeps copy crisp as the light moves) */
     .legibility {
-      position: fixed; left: 50%; top: 44%; transform: translate(-50%, -50%);
-      width: min(760px, 92vw); height: min(520px, 70vh); z-index: 1; pointer-events: none;
+      position: absolute; left: 50%; top: 46%; transform: translate(-50%, -50%);
+      width: min(820px, 94vw); height: min(520px, 70vh); z-index: 1; pointer-events: none;
       background: radial-gradient(ellipse at center,
-        rgba(255,255,255,0.75) 0%, rgba(255,255,255,0.36) 50%, transparent 74%);
+        rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.38) 50%, transparent 74%);
     }
-
-    /* ---- Top bar ---- */
-    .topbar {
-      position: relative; z-index: 3;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: clamp(20px, 3vw, 32px) clamp(24px, 5vw, 66px) 0;
-    }
-    .brand { display: inline-flex; line-height: 0; }
-    .brand-logo {
-      height: 92px; width: auto; display: block;
-      mix-blend-mode: multiply; /* drops the logo's white background on the white page */
-      -webkit-user-select: none; user-select: none;
-    }
-
-    /* ---- Hero ---- */
-    .wrap {
-      position: relative; z-index: 2; flex: 1;
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      text-align: center; padding: 30px clamp(24px, 5vw, 40px) 40px;
-    }
+    .hero-inner { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; }
 
     .eyebrow {
       display: inline-flex; align-items: center; gap: 13px;
       font-size: 0.72rem; font-weight: 600; letter-spacing: 4px;
-      text-transform: uppercase; color: var(--amber-dp); margin-bottom: 30px;
+      text-transform: uppercase; color: var(--amber-dp); margin-bottom: 28px;
     }
     .eyebrow .rule { width: 30px; height: 1px; background: var(--amber); opacity: 0.6; }
     .eyebrow .dot {
@@ -115,7 +168,7 @@
 
     h1 {
       font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700;
-      font-size: clamp(2.9rem, 8.4vw, 6.4rem); line-height: 0.98;
+      font-size: clamp(2.9rem, 8.4vw, 6.2rem); line-height: 0.98;
       letter-spacing: -0.03em; color: var(--ink); margin-bottom: 26px;
     }
     h1 .light {
@@ -126,15 +179,14 @@
     }
 
     .lead {
-      max-width: 560px; font-weight: 400; font-size: clamp(1.02rem, 2.1vw, 1.18rem);
+      max-width: 580px; font-weight: 400; font-size: clamp(1.02rem, 2.1vw, 1.16rem);
       line-height: 1.75; color: var(--body); margin-bottom: 38px;
     }
 
-    .cta-row { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; align-items: center; }
+    .cta-row { display: flex; flex-wrap: wrap; gap: 18px; justify-content: center; align-items: center; }
     .btn {
       display: inline-flex; align-items: center; gap: 10px;
-      padding: 16px 34px; border-radius: 999px;
-      border: 1.5px solid transparent;
+      padding: 15px 32px; border-radius: 999px; border: 1.5px solid transparent;
       font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.9rem; letter-spacing: 0.4px;
       text-decoration: none; cursor: pointer;
       transition: transform .22s ease, box-shadow .28s ease, background .25s ease, border-color .25s ease, color .25s ease;
@@ -147,80 +199,678 @@
     .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 18px 40px rgba(165,101,27,0.36); }
     .btn-primary .arrow { transition: transform .25s ease; }
     .btn-primary:hover .arrow { transform: translateX(4px); }
-    .btn-outline {
-      color: var(--ink);
-      border-color: #d6d0c4;
-      background: rgba(255,255,255,0.7);
+    .btn-outline { color: var(--ink); border-color: #d6d0c4; background: rgba(255,255,255,0.7); }
+    .btn-outline:hover { transform: translateY(-2px); border-color: var(--amber); color: var(--amber-dp); background: rgba(255,255,255,0.95); }
+
+    .scroll-cue {
+      position: absolute; bottom: 26px; left: 50%; transform: translateX(-50%); z-index: 2;
+      display: flex; flex-direction: column; align-items: center; gap: 7px;
+      font-size: 0.62rem; letter-spacing: 3px; text-transform: uppercase; color: var(--faint);
     }
-    .btn-outline:hover {
-      transform: translateY(-2px);
-      border-color: var(--amber);
-      color: var(--amber-dp);
-      background: rgba(255,255,255,0.95);
+    .scroll-cue .mouse { width: 22px; height: 34px; border: 2px solid var(--faint); border-radius: 12px; position: relative; }
+    .scroll-cue .mouse::after {
+      content: ""; position: absolute; top: 6px; left: 50%; transform: translateX(-50%);
+      width: 3px; height: 6px; border-radius: 3px; background: var(--amber); animation: scrolldot 1.8s ease-in-out infinite;
+    }
+    @keyframes scrolldot { 0%{opacity:0;transform:translate(-50%,0)} 40%{opacity:1} 80%{opacity:0;transform:translate(-50%,10px)} 100%{opacity:0} }
+
+    /* ============ SECTION SHELL ============ */
+    section { position: relative; z-index: 2; }
+    .section-pad { padding: clamp(72px, 11vw, 130px) 0; }
+    .bg-cream { background: var(--cream-1); }
+    .bg-cream-2 { background: linear-gradient(180deg, var(--cream-1), var(--cream-2)); }
+    .bg-white { background: #ffffff; }
+    .bg-ink {
+      background:
+        radial-gradient(1200px 500px at 80% -10%, rgba(226,160,76,0.10), transparent 60%),
+        linear-gradient(180deg, #241f18, #1c1813);
+      color: #cfc6b6;
     }
 
-    /* ---- Footer ---- */
+    .section-head { max-width: 760px; margin-bottom: clamp(38px, 6vw, 64px); }
+    .section-head.center { margin-left: auto; margin-right: auto; text-align: center; }
+    .kicker {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 0.7rem; font-weight: 600; letter-spacing: 3.5px; text-transform: uppercase;
+      color: var(--amber-dp); margin-bottom: 18px;
+    }
+    .kicker .rule { width: 26px; height: 1px; background: var(--amber); opacity: .6; }
+    .bg-ink .kicker { color: var(--amber-hi); }
+    h2 {
+      font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700;
+      font-size: clamp(2rem, 5vw, 3.1rem); line-height: 1.04; letter-spacing: -0.025em; color: var(--ink);
+    }
+    .bg-ink h2 { color: #fbf6ec; }
+    h2 .accent {
+      background: linear-gradient(180deg, var(--amber-hi), var(--amber) 55%, var(--amber-dp));
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .section-head p { margin-top: 18px; font-size: 1.04rem; line-height: 1.75; color: var(--body); }
+    .bg-ink .section-head p { color: #b6ac9b; }
+
+    /* ============ ABOUT ============ */
+    .about-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: clamp(30px, 5vw, 68px); align-items: start; }
+    .about-copy p { font-size: 1.06rem; line-height: 1.85; color: var(--ink-2); margin-bottom: 18px; }
+    .about-copy p:last-child { margin-bottom: 0; }
+    .about-copy .closer {
+      font-family: 'Fraunces', serif; font-style: italic; font-weight: 500;
+      font-size: 1.35rem; color: var(--amber-dp); line-height: 1.5; margin-top: 6px;
+    }
+    .mv-stack { display: flex; flex-direction: column; gap: 20px; }
+    .mv-card {
+      background: #fff; border: 1px solid var(--line); border-radius: 18px;
+      padding: 28px 28px; box-shadow: 0 18px 44px rgba(70,58,42,0.06); position: relative; overflow: hidden;
+    }
+    .mv-card::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: linear-gradient(var(--amber-hi), var(--amber-dp)); }
+    .mv-card h3 {
+      font-family: 'Bricolage Grotesque', sans-serif; font-size: 1.2rem; color: var(--ink);
+      display: flex; align-items: center; gap: 10px; margin-bottom: 10px; letter-spacing: -0.01em;
+    }
+    .mv-card h3 .ic { width: 22px; height: 22px; color: var(--amber-dp); flex: none; }
+    .mv-card p { font-size: 0.97rem; line-height: 1.7; color: var(--body); }
+
+    /* ============ SERVICES ============ */
+    .svc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 20px; }
+    .svc-card {
+      background: rgba(255,255,255,0.6); border: 1px solid var(--line); border-radius: 18px;
+      padding: 30px 26px; transition: transform .3s ease, box-shadow .3s ease, background .3s ease, border-color .3s ease;
+    }
+    .svc-card:hover { transform: translateY(-6px); background: #fff; box-shadow: 0 26px 50px rgba(70,58,42,0.10); border-color: rgba(201,133,47,0.35); }
+    .svc-ic {
+      width: 54px; height: 54px; border-radius: 14px; display: grid; place-items: center; margin-bottom: 20px;
+      background: linear-gradient(140deg, rgba(226,160,76,0.16), rgba(165,101,27,0.10));
+      color: var(--amber-dp); border: 1px solid rgba(201,133,47,0.24);
+    }
+    .svc-ic svg { width: 28px; height: 28px; }
+    .svc-card h3 { font-family: 'Bricolage Grotesque', sans-serif; font-size: 1.12rem; color: var(--ink); margin-bottom: 8px; letter-spacing: -0.01em; }
+    .svc-card p { font-size: 0.92rem; line-height: 1.65; color: var(--body); }
+
+    /* ============ LOGO WALL (brands + clients) ============ */
+    .logo-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 18px; }
+    .logo-grid.clients { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+    .logo-tile {
+      aspect-ratio: 5 / 3; border-radius: 16px; display: grid; place-items: center; padding: 22px 18px;
+      background: rgba(255,255,255,0.55); border: 1px solid var(--line);
+      transition: transform .3s ease, box-shadow .3s ease, background .3s ease, border-color .3s ease, filter .3s ease;
+      filter: grayscale(1); opacity: 0.9;
+    }
+    .bg-ink .logo-tile { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.10); }
+    .logo-tile:hover {
+      transform: translateY(-5px); filter: grayscale(0); opacity: 1;
+      background: #fff; box-shadow: 0 22px 44px rgba(70,58,42,0.12); border-color: rgba(201,133,47,0.4);
+    }
+    .bg-ink .logo-tile:hover { background: rgba(255,255,255,0.06); box-shadow: 0 22px 44px rgba(0,0,0,0.35); }
+
+    /* real logo image inside a tile */
+    .logo-img { max-width: 100%; max-height: 82px; width: auto; height: auto; object-fit: contain; display: block; }
+
+    /* wordmark base */
+    .wm { text-align: center; line-height: 1; -webkit-user-select: none; user-select: none; }
+    .wm .r1 { display: block; }
+    .wm .r2 { display: block; margin-top: 5px; font-size: 0.56em; letter-spacing: 3px; font-weight: 600; color: var(--faint); }
+    .bg-ink .wm .r2 { color: #8f8676; }
+
+    /* brand-specific wordmarks */
+    .wm-tridonic { font-family: 'Inter', sans-serif; font-weight: 600; font-size: 1.7rem; letter-spacing: 1px; color: #5a636b; }
+    .wm-tridonic b { color: var(--amber-dp); font-weight: 600; }
+    .wm-tci { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 2.2rem; letter-spacing: 2px; color: #3f4a52; }
+    .wm-tci i { font-style: normal; color: var(--amber-dp); }
+    .wm-vs { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; color: #3f4a52; }
+    .wm-vs .r1 { font-size: 2.2rem; letter-spacing: 1px; }
+    .wm-led { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 1.7rem; letter-spacing: 1px; color: var(--ink); }
+    .wm-led i { font-style: normal; color: var(--amber-dp); }
+    .wm-led .r2 { font-weight: 500; }
+    .wm-meanwell { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 1.42rem; letter-spacing: 1.5px; color: #b23b2e; }
+    .wm-meanwell i { font-style: normal; color: #3f4a52; }
+
+    /* client-specific wordmarks */
+    .wm-medi { font-family: 'Inter', sans-serif; font-weight: 700; font-size: 1.5rem; letter-spacing: -0.2px; color: #1f7a8c; }
+    .wm-medi b { color: #e2683c; font-weight: 700; }
+    .wm-smart { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 1.2rem; letter-spacing: 0.5px; color: #3f4a52; }
+    .wm-smart i { font-style: normal; color: var(--amber-dp); }
+    .wm-areej { color: var(--ink); }
+    .wm-areej .r1 { font-family: 'Fraunces', serif; font-style: italic; font-weight: 600; font-size: 2rem; color: #7a5c2e; }
+    .wm-ghtc { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 2.1rem; letter-spacing: 3px; color: #2f3a44; }
+    .wm-ghtc i { font-style: normal; color: var(--amber-dp); }
+    .wm-horizon { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 1.42rem; letter-spacing: 1px; color: #3f4a52; }
+    .wm-horizon .hz { display: inline-block; width: 34px; height: 34px; vertical-align: middle; margin-right: 8px; }
+
+    /* ============ ORG CHART ============ */
+    .org { max-width: 1060px; margin: 0 auto; }
+    .org-root-wrap { display: flex; flex-direction: column; align-items: center; }
+    .org-trunk { width: 2px; height: 32px; background: repeating-linear-gradient(var(--amber-hi) 0 6px, transparent 6px 12px); }
+    .org-rail-wrap { display: flex; justify-content: center; }
+    .org-rail { width: min(100%, 820px); height: 26px; position: relative; }
+    /* horizontal rail + drop lines to each division (desktop 4-col) */
+    .org-rail::before {
+      content: ""; position: absolute; top: 0; left: 12.5%; right: 12.5%; height: 2px;
+      background: repeating-linear-gradient(90deg, var(--amber-hi) 0 6px, transparent 6px 12px);
+    }
+    .org-rail i {
+      position: absolute; top: 0; width: 2px; height: 26px;
+      background: repeating-linear-gradient(var(--amber-hi) 0 6px, transparent 6px 12px);
+    }
+    .org-rail i:nth-child(1){ left: 12.5%; } .org-rail i:nth-child(2){ left: 37.5%; }
+    .org-rail i:nth-child(3){ left: 62.5%; } .org-rail i:nth-child(4){ left: 87.5%; }
+
+    .org-divisions { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; align-items: start; }
+    .division {
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 16px; padding: 14px 14px 18px;
+    }
+
+    .node {
+      display: inline-flex; align-items: center; gap: 9px;
+      padding: 12px 16px; border-radius: 11px; font-weight: 600; letter-spacing: .2px;
+      position: relative; width: 100%; text-align: left; line-height: 1.25;
+    }
+    .node .ni { width: 17px; height: 17px; flex: none; }
+    .node-root {
+      width: auto; justify-content: center; text-align: center;
+      background: linear-gradient(135deg, var(--amber-hi), var(--amber) 48%, var(--amber-dp));
+      color: #fff8ef; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 1.06rem;
+      padding: 16px 30px; border-radius: 15px; box-shadow: 0 16px 34px rgba(165,101,27,0.32);
+    }
+    .node-div {
+      background: linear-gradient(150deg, #352d20, #1b170f); color: #f7f0e2;
+      border: 1.5px solid var(--amber); box-shadow: 0 12px 26px rgba(0,0,0,0.28);
+      font-family: 'Bricolage Grotesque', sans-serif; font-size: 0.95rem; justify-content: center; text-align: center;
+    }
+    .node-div .ni { color: var(--amber-hi); }
+    .node-sub {
+      background: rgba(255,255,255,0.94); color: var(--ink); border: 1px solid rgba(201,133,47,0.6);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.18); font-size: 0.85rem; font-weight: 600;
+    }
+    .node-leaf {
+      background: rgba(247,242,232,0.92); color: var(--ink-2); border: 1px solid rgba(255,255,255,0.14);
+      font-size: 0.8rem; font-weight: 500; box-shadow: 0 5px 12px rgba(0,0,0,0.14);
+    }
+    .node-leaf .ni { color: var(--amber-dp); }
+    .node-div, .node-sub, .node-leaf { transition: transform .25s ease, box-shadow .25s ease; }
+    .division .node-sub:hover, .division .node-leaf:hover { transform: translateX(3px); }
+
+    /* indented sub-tree inside each division */
+    .teams { position: relative; margin-top: 14px; padding-left: 18px; }
+    .teams::before {
+      content: ""; position: absolute; left: 6px; top: -8px; bottom: 14px; width: 2px;
+      background: repeating-linear-gradient(rgba(201,133,47,0.6) 0 5px, transparent 5px 10px);
+    }
+    .teams > .team, .teams > .subgroup { position: relative; margin-top: 10px; }
+    .teams > .team:first-child, .teams > .subgroup:first-child { margin-top: 2px; }
+    .teams > .team::before, .teams > .subgroup > .node-sub::before {
+      content: ""; position: absolute; left: -12px; top: 50%; width: 12px; height: 2px;
+      background: repeating-linear-gradient(90deg, rgba(201,133,47,0.6) 0 4px, transparent 4px 8px);
+    }
+    .subgroup > .node-sub { position: relative; }
+    .subgroup .teams { margin-top: 8px; padding-left: 16px; }
+    .subgroup .teams::before { left: 5px; }
+
+    .org-legend { display: flex; flex-wrap: wrap; gap: 14px 24px; justify-content: center; margin-top: 40px; font-size: 0.82rem; color: #b6ac9b; }
+    .org-legend span { display: inline-flex; align-items: center; gap: 8px; }
+    .org-legend .sw { width: 15px; height: 15px; border-radius: 5px; }
+    .sw-root { background: linear-gradient(135deg, var(--amber-hi), var(--amber-dp)); }
+    .sw-div { background: linear-gradient(150deg, #352d20, #1b170f); border: 1px solid var(--amber); }
+    .sw-leaf { background: rgba(247,242,232,0.92); border: 1px solid rgba(255,255,255,0.2); }
+
+    @media (max-width: 900px) {
+      .org-divisions { grid-template-columns: repeat(2, 1fr); }
+      .org-rail { display: none; }
+      .org-trunk { height: 22px; }
+    }
+    @media (max-width: 520px) {
+      .org-divisions { grid-template-columns: 1fr; }
+    }
+
+    /* ============ CONTACT ============ */
+    .offices-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
+    .office-card {
+      background: #fff; border: 1px solid var(--line); border-radius: 18px;
+      padding: 30px 26px 28px; box-shadow: 0 18px 44px rgba(70,58,42,0.06);
+      position: relative; overflow: hidden; display: flex; flex-direction: column;
+      transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+    }
+    .office-card::before { content: ""; position: absolute; left: 0; top: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--amber-hi), var(--amber-dp)); }
+    .office-card:hover { transform: translateY(-6px); box-shadow: 0 28px 54px rgba(70,58,42,0.12); border-color: rgba(201,133,47,0.35); }
+    .office-card .ic {
+      width: 46px; height: 46px; border-radius: 12px; display: grid; place-items: center; margin-bottom: 18px;
+      background: linear-gradient(135deg, var(--amber-hi), var(--amber-dp)); color: #fff8ef;
+      box-shadow: 0 10px 22px rgba(165,101,27,0.28);
+    }
+    .office-card .ic svg { width: 22px; height: 22px; }
+    .office-card h4 { font-family: 'Bricolage Grotesque', sans-serif; font-size: 1.16rem; color: var(--ink); margin-bottom: 12px; letter-spacing: -0.01em; }
+    .office-card address { font-style: normal; font-size: 0.96rem; line-height: 1.7; color: var(--body); }
+    .office-card .office-phone {
+      display: inline-flex; align-items: center; gap: 8px; margin-top: auto; padding-top: 16px;
+      font-size: 0.98rem; font-weight: 600; color: var(--amber-dp); text-decoration: none;
+    }
+    .office-card .office-phone svg { width: 16px; height: 16px; flex: none; }
+    .office-card .office-phone:hover { color: var(--amber); }
+
+    /* shared email + CTA bar */
+    .contact-extra {
+      margin-top: 26px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+      gap: 20px 28px; background: rgba(255,255,255,0.6); border: 1px solid var(--line);
+      border-radius: 18px; padding: 24px 30px;
+    }
+    .contact-extra .emails { display: flex; gap: 16px; align-items: flex-start; }
+    .contact-extra .emails .ic {
+      width: 46px; height: 46px; border-radius: 12px; flex: none; display: grid; place-items: center;
+      background: linear-gradient(135deg, var(--amber-hi), var(--amber-dp)); color: #fff8ef;
+      box-shadow: 0 10px 22px rgba(165,101,27,0.28);
+    }
+    .contact-extra .emails .ic svg { width: 22px; height: 22px; }
+    .contact-extra h4 { font-size: 0.72rem; letter-spacing: 2.5px; text-transform: uppercase; color: var(--faint); margin-bottom: 6px; font-weight: 600; }
+    .contact-extra a.mail { display: block; font-size: 1rem; line-height: 1.55; color: var(--ink-2); text-decoration: none; }
+    .contact-extra a.mail:hover { color: var(--amber-dp); }
+
+    /* ============ FOOTER ============ */
     footer {
-      position: relative; z-index: 2;
-      display: flex; flex-wrap: wrap; gap: 8px 20px;
-      align-items: center; justify-content: space-between;
-      padding: 22px clamp(24px, 5vw, 66px) 28px;
-      border-top: 1px solid var(--line);
-      font-size: 0.76rem; letter-spacing: 0.3px; color: var(--faint);
+      position: relative; z-index: 2; background: #16130f; color: #98907f;
+      padding: 54px 0 30px;
     }
-    footer a { color: var(--ink-2); text-decoration: none; }
-    footer a:hover { color: var(--amber-dp); }
+    .foot-top { display: flex; flex-wrap: wrap; gap: 28px; justify-content: space-between; align-items: flex-start; padding-bottom: 34px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .foot-brand img { height: 60px; width: auto; filter: brightness(0) invert(1); opacity: 0.92; }
+    .foot-tag { max-width: 320px; margin-top: 16px; font-size: 0.9rem; line-height: 1.7; color: #8a8272; }
+    .foot-cols { display: flex; gap: clamp(34px, 6vw, 80px); flex-wrap: wrap; }
+    .foot-col h5 { font-size: 0.72rem; letter-spacing: 2.5px; text-transform: uppercase; color: var(--amber-hi); margin-bottom: 16px; font-weight: 600; }
+    .foot-col a, .foot-col p { display: block; font-size: 0.9rem; color: #b3aa99; text-decoration: none; margin-bottom: 10px; line-height: 1.5; }
+    .foot-col a:hover { color: #fff; }
+    .foot-bottom { display: flex; flex-wrap: wrap; gap: 8px 20px; justify-content: space-between; align-items: center; padding-top: 24px; font-size: 0.78rem; color: #7c7565; }
 
-    /* entrance */
+    /* ============ REVEAL ============ */
+    .reveal { opacity: 0; transform: translateY(26px); transition: opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1); }
+    .reveal.in { opacity: 1; transform: none; }
     .fade { opacity: 0; transform: translateY(20px); animation: fadeUp 1s cubic-bezier(.2,.7,.2,1) forwards; }
     .d1{animation-delay:.1s}.d2{animation-delay:.24s}.d3{animation-delay:.4s}.d4{animation-delay:.56s}.d5{animation-delay:.72s}
     @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
 
     @media (prefers-reduced-motion: reduce) {
       *,*::before,*::after { animation: none !important; transition: none !important; }
-      .fade { opacity: 1; transform: none; }
+      .fade, .reveal { opacity: 1; transform: none; }
     }
-    @media (max-width: 620px) {
-      .brand-logo { height: 66px; }
+
+    /* ============ RESPONSIVE ============ */
+    @media (max-width: 900px) {
+      .about-grid { grid-template-columns: 1fr; }
+      .offices-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .contact-extra { flex-direction: column; align-items: flex-start; }
+      .logo-grid, .logo-grid.clients { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+    @media (max-width: 560px) {
+      .offices-grid { grid-template-columns: 1fr; }
+      .logo-grid, .logo-grid.clients { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .logo-tile { padding: 18px 10px; }
+      .wm .r1, .wm .r2 { overflow-wrap: break-word; }
+      .wm .r2 { letter-spacing: 1.5px; }
+      .wm-tci { font-size: 1.9rem; }
+      .wm-vs .r1 { font-size: 1.9rem; }
+      .wm-ghtc { font-size: 1.8rem; letter-spacing: 2px; }
+      .wm-areej .r1 { font-size: 1.75rem; }
+      .wm-tridonic { font-size: 1.45rem; }
+      .wm-led { font-size: 1.45rem; }
+      .wm-meanwell { font-size: 1.2rem; letter-spacing: 1px; }
+      .nav .brand img { height: 48px; }
     }
   </style>
 </head>
 <body>
-  <img class="skyline" src="skyline.jpg" alt="" aria-hidden="true" />
-  <div class="skyline-fade" aria-hidden="true"></div>
-  <div class="legibility" aria-hidden="true"></div>
 
-  <header class="topbar">
-    <a class="brand fade" href="/" aria-label="ATS — Ark Design Studio, Technical Services">
-      <img class="brand-logo" src="logo.jpg" alt="ATS — Ark Design Studio, Technical Services" />
+  <!-- ===================== NAV ===================== -->
+  <nav class="nav" id="nav">
+    <a class="brand" href="#home" aria-label="ATS — Ark Design Studio, Technical Services">
+      <img src="logo.jpg" alt="ATS — Ark Design Studio, Technical Services" />
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-links" id="navLinks">
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#brands">Brands</a>
+      <a href="#clients">Clients</a>
+      <a href="#organization">Organization</a>
+      <a class="nav-cta" href="#contact">Contact</a>
+    </div>
+  </nav>
+
+  <!-- ===================== HERO ===================== -->
+  <header class="hero" id="home">
+    <img class="skyline" src="skyline.jpg" alt="" aria-hidden="true" />
+    <div class="skyline-fade" aria-hidden="true"></div>
+    <div class="legibility" aria-hidden="true"></div>
+
+    <div class="hero-inner">
+      <div class="eyebrow fade d1"><span class="rule"></span><span class="dot"></span> Lighting &bull; Design &bull; Technical Services <span class="rule"></span></div>
+      <h1 class="fade d2">Bringing spaces<br />to <span class="light">light</span>.</h1>
+      <p class="lead fade d3">
+        A2S Technical Services designs, supplies and delivers lighting that gives every
+        space its glow : from landmark facades to intimate interiors. Creativity, engineering
+        precision and energy efficiency, from concept to completion.
+      </p>
+      <div class="cta-row fade d4">
+        <a class="btn btn-primary" href="#contact">Get in touch <span class="arrow">&rarr;</span></a>
+        <a class="btn btn-outline" href="#services">Explore our work</a>
+      </div>
+    </div>
+
+    <a class="scroll-cue fade d5" href="#about" aria-label="Scroll to explore">
+      <span class="mouse"></span> Scroll
     </a>
   </header>
 
-  <main class="wrap">
-    <div class="eyebrow fade d1"><span class="rule"></span><span class="dot"></span> Website Launching Soon <span class="rule"></span></div>
+  <!-- ===================== ABOUT + MISSION/VISION ===================== -->
+  <section class="section-pad bg-white" id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-copy reveal">
+          <div class="kicker"><span class="rule"></span> About Us</div>
+          <h2>More than <span class="accent">illumination</span>.</h2>
+          <p style="margin-top:24px;">
+            At A2S Technical Services, we believe lighting is more than illumination : it is an
+            essential element that defines architecture, elevates spaces, and creates memorable
+            experiences.
+          </p>
+          <p>
+            Our team delivers world-class lighting solutions that blend creativity, engineering
+            precision, and energy efficiency across architectural, decorative, facade, landscape,
+            and industrial applications.
+          </p>
+          <p class="closer">From concept to completion, we bring your vision to light.</p>
+        </div>
 
-    <h1 class="fade d2">Bringing spaces<br />to <span class="light">light</span>.</h1>
-
-    <p class="lead fade d3">
-      ATS designs, builds and services lighting that gives every space its glow :
-      from landmark towers to intimate interiors. Our new website is being finished
-      with the same care. Until then, we'd love to hear from you.
-    </p>
-
-    <div class="cta-row fade d4">
-      <a class="btn btn-primary" href="mailto:info@a2stechnicalservices.com">Get in touch <span class="arrow">&rarr;</span></a>
-      <a class="btn btn-outline" href="tel:+971586279497" aria-label="Call us at +971 58 627 9497">Call us</a>
+        <div class="mv-stack reveal">
+          <div class="mv-card">
+            <h3>
+              <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/><circle cx="12" cy="12" r="3.2"/></svg>
+              Mission
+            </h3>
+            <p>To engineer and deliver intelligent lighting and immersive technology solutions that
+              elevate spaces, strengthen brands, and create meaningful experiences through
+              innovation, precision, and reliable execution.</p>
+          </div>
+          <div class="mv-card">
+            <h3>
+              <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+              Vision
+            </h3>
+            <p>To be a trusted leader in integrated lighting and immersive technology, shaping the
+              future of experiential spaces through creativity, engineering excellence, advanced
+              technology, and uncompromising quality.</p>
+          </div>
+        </div>
+      </div>
     </div>
-  </main>
+  </section>
 
+  <!-- ===================== SERVICES ===================== -->
+  <section class="section-pad bg-cream-2" id="services">
+    <div class="container">
+      <div class="section-head center reveal">
+        <div class="kicker" style="justify-content:center;"><span class="rule"></span> What We Do <span class="rule"></span></div>
+        <h2>Lighting, end&#8209;to&#8209;<span class="accent">end</span>.</h2>
+        <p>Design, supply and technical delivery across every discipline of the built environment.</p>
+      </div>
+
+      <div class="svc-grid reveal">
+        <div class="svc-card">
+          <div class="svc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.2 1 2h6c0-.8.4-1.5 1-2A7 7 0 0 0 12 2z"/></svg></div>
+          <h3>Lighting Design &amp; Supply</h3>
+          <p>Concept-to-delivery lighting schemes with the fixtures, drivers and controls to match.</p>
+        </div>
+        <div class="svc-card">
+          <div class="svc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M6 21V8l6-4 6 4v13"/><path d="M10 21v-5h4v5"/><path d="M9 11h.01M15 11h.01"/></svg></div>
+          <h3>Architectural Lighting</h3>
+          <p>Integrated light that defines form, structure and atmosphere across interiors and exteriors.</p>
+        </div>
+        <div class="svc-card">
+          <div class="svc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v2M12 19v2M5 12H3M21 12h-2M6 6l1.5 1.5M16.5 16.5 18 18"/><circle cx="12" cy="12" r="4.5"/></svg></div>
+          <h3>Decorative Lighting</h3>
+          <p>Statement fixtures and feature pieces that bring character, warmth and craft to a space.</p>
+        </div>
+        <div class="svc-card">
+          <div class="svc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2s5 4 5 9a5 5 0 0 1-10 0c0-5 5-9 5-9z"/><path d="M3 21h18"/></svg></div>
+          <h3>Facade &amp; Landscape</h3>
+          <p>Dynamic facade media and landscape lighting that make buildings and grounds come alive at night.</p>
+        </div>
+        <div class="svc-card">
+          <div class="svc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V9l8-5 8 5v12"/><path d="M4 13h16M9 21v-5h6v5"/></svg></div>
+          <h3>Industrial &amp; Sports</h3>
+          <p>High-performance, energy-efficient lighting engineered for large-scale and demanding venues.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== BRANDS WE USE ===================== -->
+  <section class="section-pad bg-white" id="brands">
+    <div class="container">
+      <div class="section-head center reveal">
+        <div class="kicker" style="justify-content:center;"><span class="rule"></span> Brands We Use <span class="rule"></span></div>
+        <h2>Engineered with <span class="accent">trusted</span> components.</h2>
+        <p>We build on proven lighting technology : drivers, modules and power supplies from established global manufacturers.</p>
+      </div>
+
+      <div class="logo-grid reveal">
+        <div class="logo-tile" title="Tridonic"><img class="logo-img" src="logos/tridonic.png" alt="Tridonic" loading="lazy"></div>
+        <div class="logo-tile" title="TCI"><img class="logo-img" src="logos/tci.png" alt="TCI" loading="lazy"></div>
+        <div class="logo-tile" title="Vossloh-Schwabe"><img class="logo-img" src="logos/vossloh-schwabe.png" alt="Vossloh-Schwabe" loading="lazy"></div>
+        <div class="logo-tile" title="LED Domain"><img class="logo-img" src="logos/leddomain.png" alt="LED Domain" loading="lazy"></div>
+        <div class="logo-tile" title="MEAN WELL"><img class="logo-img" src="logos/meanwell.png" alt="MEAN WELL" loading="lazy"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== OUR CLIENTS ===================== -->
+  <section class="section-pad bg-cream-2" id="clients">
+    <div class="container">
+      <div class="section-head center reveal">
+        <div class="kicker" style="justify-content:center;"><span class="rule"></span> Our Clients <span class="rule"></span></div>
+        <h2>Trusted by teams who <span class="accent">build</span>.</h2>
+        <p>A growing roster of developers, contractors and specialists across the UAE.</p>
+      </div>
+
+      <div class="logo-grid clients reveal">
+        <div class="logo-tile" title="Mediclinic"><img class="logo-img" src="logos/mediclinic.png" alt="Mediclinic" loading="lazy"></div>
+        <div class="logo-tile" title="Smart Pole Fabrications"><img class="logo-img" src="logos/smartpoles-logo-nobg.png" alt="Smart Pole Fabrications" loading="lazy"></div>
+        <div class="logo-tile" title="Areej Landscape"><img class="logo-img" src="logos/areej-landscaping.png" alt="Areej Landscape" loading="lazy"></div>
+        <div class="logo-tile" title="GHTC"><img class="logo-img" src="logos/ghtc-logo-website-removebg-preview.png" alt="GHTC Equipment Trading LLC" loading="lazy"></div>
+        <div class="logo-tile" title="Horizon Trading LLC"><div class="wm wm-horizon"><span class="r1"><svg class="hz" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="20" cy="17" r="7" stroke="#c9852f"/><path d="M4 30h32" stroke="#3f4a52"/><path d="M9 34h22" stroke="#9a8f7d"/></svg>Horizon</span><span class="r2">Trading LLC</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== ORGANIZATION CHART ===================== -->
+  <section class="section-pad bg-ink" id="organization">
+    <div class="container">
+      <div class="section-head center reveal">
+        <div class="kicker" style="justify-content:center;"><span class="rule" style="background:var(--amber-hi)"></span> Organization Chart <span class="rule" style="background:var(--amber-hi)"></span></div>
+        <h2>One team, <span class="accent">clearly</span> structured.</h2>
+        <p>How A2S Technical Services is organised : from front-of-house sales to on-site execution.</p>
+      </div>
+
+      <div class="org reveal">
+        <div class="org-root-wrap">
+          <div class="node node-root">A2S Technical Services</div>
+          <div class="org-trunk"></div>
+        </div>
+        <div class="org-rail-wrap">
+          <div class="org-rail"><i></i><i></i><i></i><i></i></div>
+        </div>
+
+        <div class="org-divisions">
+          <!-- Sales & Marketing -->
+          <div class="division">
+            <div class="node node-div">
+              <svg class="ni" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l18-6-4 14-5-4-4 4z"/></svg>
+              Sales &amp; Marketing
+            </div>
+            <div class="teams">
+              <div class="team"><div class="node node-leaf"><svg class="ni" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M2 21v-1a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5v1"/><path d="M17 8h5M19.5 5.5v5"/></svg>Marketing Team</div></div>
+              <div class="team"><div class="node node-leaf"><svg class="ni" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7" r="3.2"/><path d="M5 21v-1a7 7 0 0 1 14 0v1"/></svg>Sales Engineer</div></div>
+            </div>
+          </div>
+
+          <!-- Project Division -->
+          <div class="division">
+            <div class="node node-div">
+              <svg class="ni" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l7-4 7 4v14"/><path d="M9 21v-6h6v6"/></svg>
+              Project Division
+            </div>
+            <div class="teams">
+              <div class="subgroup">
+                <div class="node node-sub"><svg class="ni" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 5v8l-9 5-9-5V8z"/><path d="M3 8l9 5 9-5M12 13v8"/></svg>Site Engineering</div>
+                <div class="teams">
+                  <div class="team"><div class="node node-leaf"><svg class="ni" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="2.6"/><circle cx="16" cy="8" r="2.6"/><path d="M2.5 20v-1a4 4 0 0 1 4-4h3M14.5 15h3a4 4 0 0 1 4 4v1"/></svg>Creative Team</div></div>
+                  <div class="team"><div class="node node-leaf"><svg class="ni" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9 17 7M7 17l-2.1 2.1"/></svg>Technology Engineer</div></div>
+                </div>
+              </div>
+              <div class="subgroup">
+                <div class="node node-sub"><svg class="ni" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 5v8l-9 5-9-5V8z"/><path d="M3 8l9 5 9-5M12 13v8"/></svg>Site Engineering</div>
+                <div class="teams">
+                  <div class="team"><div class="node node-leaf"><svg class="ni" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 3 7v6c0 5 3.5 8 9 9 5.5-1 9-4 9-9V7z"/><path d="M9 12l2 2 4-4"/></svg>Project Execution Supervisors</div></div>
+                  <div class="team"><div class="node node-leaf"><svg class="ni" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M2 21v-1a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5v1"/><circle cx="18" cy="9" r="2"/></svg>On Site Team</div></div>
+                  <div class="team"><div class="node node-leaf"><svg class="ni" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M2 21v-1a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5v1"/><path d="M19 7l2 2M21 7l-2 2"/></svg>Off Site Team</div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Operations -->
+          <div class="division">
+            <div class="node node-div">
+              <svg class="ni" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-2.7 1.1V21a2 2 0 1 1-4 0v-.2A1.6 1.6 0 0 0 7 19.4l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1A1.6 1.6 0 0 0 3 12H3a2 2 0 1 1 0-4h.2A1.6 1.6 0 0 0 4.6 5.4l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1A1.6 1.6 0 0 0 10 3V3a2 2 0 1 1 4 0v.2a1.6 1.6 0 0 0 2.7 1.1l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.6 1.6 0 0 0 1.1 2.7H21a2 2 0 1 1 0 4h-.2a1.6 1.6 0 0 0-1.4 1z"/></svg>
+              Operations
+            </div>
+            <div class="teams">
+              <div class="team"><div class="node node-leaf"><svg class="ni" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 5h13v11H1zM14 8h4l3 3v5h-7"/><circle cx="6" cy="18" r="1.8"/><circle cx="18" cy="18" r="1.8"/></svg>Logistics &amp; Purchase</div></div>
+            </div>
+          </div>
+
+          <!-- Account Admin -->
+          <div class="division">
+            <div class="node node-div">
+              <svg class="ni" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v14H4z"/><path d="M4 9h16M8 4v14"/></svg>
+              Account Admin
+            </div>
+            <div class="teams">
+              <div class="team"><div class="node node-leaf"><svg class="ni" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 5h13v11H1zM14 8h4l3 3v5h-7"/><circle cx="6" cy="18" r="1.8"/><circle cx="18" cy="18" r="1.8"/></svg>Logistics &amp; Purchase</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="org-legend reveal">
+        <span><i class="sw sw-root"></i> Company</span>
+        <span><i class="sw sw-div"></i> Division</span>
+        <span><i class="sw sw-leaf"></i> Team / Function</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CONTACT ===================== -->
+  <section class="section-pad bg-white" id="contact">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="kicker"><span class="rule"></span> Contact Us</div>
+        <h2>Let&rsquo;s bring your space <span class="accent">to light</span>.</h2>
+        <p>Tell us about your project : we&rsquo;ll help you design, specify and deliver it.</p>
+      </div>
+
+      <div class="offices-grid reveal">
+        <div class="office-card">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.6"/></svg></div>
+          <h4>United Arab Emirates</h4>
+          <address>A2S Technical Services<br>FZC 1st Floor, SPCFZ, E311 St<br>Sharjah, United Arab Emirates</address>
+          <a class="office-phone" href="tel:+971586279497"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>+971 58 627 9497</a>
+        </div>
+        <div class="office-card">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.6"/></svg></div>
+          <h4>India</h4>
+          <address>1st Floor, 16-6-185/1, Chadhar Ghat X Road<br>Near Day Break Cafe, Osmanpura<br>Hyderabad, Telangana 500024</address>
+          <a class="office-phone" href="tel:+919100712697"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>+91 91007 12697</a>
+        </div>
+        <div class="office-card">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.6"/></svg></div>
+          <h4>United States</h4>
+          <address>29245 Stephenson Hwy<br>Madison Heights, MI 48071</address>
+          <a class="office-phone" href="tel:+16126430990"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>+1 612-643-0990</a>
+        </div>
+      </div>
+
+      <div class="contact-extra reveal">
+        <div class="emails">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4.5" width="19" height="15" rx="2"/><path d="m3 6 9 6 9-6"/></svg></div>
+          <div>
+            <h4>Email</h4>
+            <a class="mail" href="mailto:sales@a2stechnicalservices.com">sales@a2stechnicalservices.com</a>
+            <a class="mail" href="mailto:info@a2stechnicalservices.com">info@a2stechnicalservices.com</a>
+          </div>
+        </div>
+        <a class="btn btn-primary" href="mailto:info@a2stechnicalservices.com">Send an enquiry <span class="arrow">&rarr;</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
   <footer>
-    <span>&copy; <span id="year"></span> ATS &bull; <a href="https://www.atslightinc.com/">atslightinc.com</a></span>
-    <span>Illuminating spaces with precision &amp; craft</span>
+    <div class="container">
+      <div class="foot-top">
+        <div class="foot-brand">
+          <img src="logo.jpg" alt="ATS — Ark Design Studio, Technical Services" />
+          <p class="foot-tag">Lighting, design &amp; technical services that give every space its glow.
+            Architectural, decorative, facade, landscape &amp; industrial lighting : from concept to completion.</p>
+        </div>
+        <div class="foot-cols">
+          <div class="foot-col">
+            <h5>Explore</h5>
+            <a href="#about">About</a>
+            <a href="#services">Services</a>
+            <a href="#brands">Brands</a>
+            <a href="#clients">Clients</a>
+            <a href="#organization">Organization</a>
+          </div>
+          <div class="foot-col">
+            <h5>Contact</h5>
+            <a href="tel:+971586279497">UAE &nbsp;+971 58 627 9497</a>
+            <a href="tel:+919100712697">India &nbsp;+91 91007 12697</a>
+            <a href="tel:+16126430990">USA &nbsp;+1 612-643-0990</a>
+            <a href="mailto:sales@a2stechnicalservices.com">sales@a2stechnicalservices.com</a>
+            <a href="mailto:info@a2stechnicalservices.com">info@a2stechnicalservices.com</a>
+          </div>
+        </div>
+      </div>
+      <div class="foot-bottom">
+        <span>&copy; <span id="year"></span> A2S Technical Services &bull; <a href="https://www.atslightinc.com/" style="color:inherit;">atslightinc.com</a></span>
+        <span>Illuminating spaces with precision &amp; craft</span>
+      </div>
+    </div>
   </footer>
 
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
+    // Nav: scrolled state
+    const nav = document.getElementById('nav');
+    const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 24);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    // Mobile menu
+    const toggle = document.getElementById('navToggle');
+    const links = document.getElementById('navLinks');
+    const closeMenu = () => { nav.classList.remove('open'); links.classList.remove('open'); toggle.setAttribute('aria-expanded', 'false'); };
+    toggle.addEventListener('click', () => {
+      const open = links.classList.toggle('open');
+      nav.classList.toggle('open', open);
+      toggle.setAttribute('aria-expanded', String(open));
+    });
+    links.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+
+    // Reveal on scroll
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
   </script>
 </body>
 </html>

@@ -7,3 +7,9 @@ Thumbs.db
 
 # Temp preview artifacts
 _preview.html
+
+# Source material (company profile PDF + generated slide images) — not for the repo
+source-material/
+
+# Screenshot output from agent-scripts/shoot.py — throwaway verification artifacts
+agent-scripts/shots/

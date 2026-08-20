@@ -3,3 +3,6 @@
 .gitignore
 .assetsignore
 wrangler.jsonc
+source-material
+agent-scripts
+AGENT_NOTES.md
