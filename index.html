@@ -563,6 +563,7 @@
       <a href="#brands">Brands</a>
       <a href="#clients">Clients</a>
       <a href="#organization">Organization</a>
+      <a href="#news">News</a>
       <a class="nav-cta" href="#contact">Contact</a>
     </div>
   </nav>
@@ -798,6 +799,64 @@
         <span><i class="sw sw-root"></i> Company</span>
         <span><i class="sw sw-div"></i> Division</span>
         <span><i class="sw sw-leaf"></i> Team / Function</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== NEWS ===================== -->
+  <style>
+    #news .news-grid{
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:center;
+      gap:clamp(18px, 3vw, 32px);
+    }
+    #news .news-card{
+      flex:0 1 360px;
+      max-width:380px;
+      background:#fff;
+      border:1px solid rgba(0,0,0,.08);
+      border-radius:18px;
+      overflow:hidden;
+      box-shadow:0 10px 30px rgba(0,0,0,.08);
+      transition:transform .3s ease, box-shadow .3s ease;
+    }
+    #news .news-card:hover{ transform:translateY(-4px); box-shadow:0 16px 40px rgba(0,0,0,.14); }
+    #news .news-media{ display:block; width:100%; height:auto; }
+    #news .news-body{ padding:16px 18px 20px; }
+    #news .news-body h4{ margin:0 0 6px; font-size:1.1rem; }
+    #news .news-body p{ margin:0; color:#555; line-height:1.5; }
+  </style>
+  <section class="section-pad bg-cream" id="news">
+    <div class="container">
+      <div class="section-head center reveal">
+        <div class="kicker" style="justify-content:center;"><span class="rule"></span> News <span class="rule"></span></div>
+        <h2>Inside <span class="accent">ATS</span>.</h2>
+        <p>Announcements, milestones and updates from A2S Technical Services.</p>
+      </div>
+
+      <div class="news-grid reveal">
+
+        <!-- ============================================================ -->
+        <!-- ADD NEWEST POST HERE  (the topmost card is shown first)      -->
+        <!-- To add one: copy an <article class="news-card">...</article> -->
+        <!-- block and paste it right here, ABOVE the older posts.        -->
+        <!-- A card can have an image, a text body, or both, e.g.:        -->
+        <!--                                                              -->
+        <!--   <article class="news-card">                               -->
+        <!--     <img class="news-media" src="your-image.jpg" alt="...">  -->
+        <!--     <div class="news-body">                                  -->
+        <!--       <h4>Your headline</h4>                                 -->
+        <!--       <p>Your short description.</p>                         -->
+        <!--     </div>                                                   -->
+        <!--   </article>                                                 -->
+        <!-- ============================================================ -->
+
+        <!-- Post: 1st Year Anniversary -->
+        <article class="news-card">
+          <img class="news-media" src="news-1st-anniversary.jpeg" alt="ATS 1st year anniversary - a year of brighter ideas, smarter solutions">
+        </article>
+
       </div>
     </div>
   </section>
