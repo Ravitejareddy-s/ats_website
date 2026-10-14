@@ -549,6 +549,66 @@
 </head>
 <body>
 
+  <!-- ===================== WELCOME POPUP ===================== -->
+  <style>
+    #welcome-popup{
+      position:fixed; inset:0; z-index:2000;
+      display:flex; align-items:center; justify-content:center;
+      padding:20px;
+      background:rgba(0,0,0,.72);
+      opacity:0; visibility:hidden;
+      transition:opacity .3s ease;
+    }
+    #welcome-popup.open{ opacity:1; visibility:visible; }
+    #welcome-popup .popup-inner{
+      position:relative;
+      max-width:min(92vw, 520px);
+      transform:scale(.94);
+      transition:transform .3s ease;
+    }
+    #welcome-popup.open .popup-inner{ transform:scale(1); }
+    #welcome-popup .popup-inner img{
+      display:block; width:100%; height:auto; max-height:88vh;
+      object-fit:contain; border-radius:14px;
+      box-shadow:0 20px 60px rgba(0,0,0,.5);
+    }
+    #welcome-popup .popup-close{
+      position:absolute; top:-14px; right:-14px;
+      width:38px; height:38px; border-radius:50%;
+      border:0; cursor:pointer;
+      background:#fff; color:#111;
+      font-size:22px; line-height:1; text-align:center;
+      box-shadow:0 4px 14px rgba(0,0,0,.35);
+    }
+    #welcome-popup .popup-close:hover{ background:#f0f0f0; }
+    @media (max-width:560px){
+      #welcome-popup .popup-close{ top:8px; right:8px; }
+    }
+  </style>
+  <div id="welcome-popup" role="dialog" aria-modal="true" aria-label="Announcement" aria-hidden="true">
+    <div class="popup-inner">
+      <button type="button" class="popup-close" id="welcomePopupClose" aria-label="Close">&times;</button>
+      <img src="news-1st-anniversary.jpeg" alt="ATS 1st year anniversary - a year of brighter ideas, smarter solutions">
+    </div>
+  </div>
+  <script>
+    (function () {
+      var popup = document.getElementById('welcome-popup');
+      if (!popup) return;
+      var closeBtn = document.getElementById('welcomePopupClose');
+      function openPopup() { popup.classList.add('open'); popup.setAttribute('aria-hidden', 'false'); }
+      function closePopup() { popup.classList.remove('open'); popup.setAttribute('aria-hidden', 'true'); }
+      // Show shortly after the page finishes loading
+      window.addEventListener('load', function () { setTimeout(openPopup, 400); });
+      // Close via the X button
+      closeBtn.addEventListener('click', closePopup);
+      // Close when tapping/clicking outside the image (on the dark backdrop)
+      popup.addEventListener('click', function (e) { if (e.target === popup) closePopup(); });
+      // Close on the Escape key
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closePopup(); });
+    })();
+  </script>
+
   <!-- ===================== NAV ===================== -->
   <nav class="nav" id="nav">
     <a class="brand" href="#home" aria-label="ATS — Ark Design Studio, Technical Services">
@@ -576,7 +636,7 @@
     <div class="legibility" aria-hidden="true"></div>
 
     <div class="hero-inner">
-      <div class="eyebrow fade d1"><span class="rule"></span><span class="dot"></span> Lighting &bull; Design &bull; Technical Services <span class="rule"></span></div>
+      <div class="eyebrow fade d1"><span class="rule"></span> Lighting &bull; Design &bull; Technical Services <span class="rule"></span></div>
       <h1 class="fade d2">Bringing spaces<br />to <span class="light">light</span>.</h1>
       <p class="lead fade d3">
         A2S Technical Services designs, supplies and delivers lighting that gives every
