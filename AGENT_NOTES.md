@@ -6,7 +6,7 @@ Agent-maintained context. Not for human docs. Keep terse; update when you learn 
 Single-file marketing site for **A2S Technical Services** (aka ATS / Ark Design Studio) — a UAE lighting + technical-services company. Everything lives in `index.html` (inline `<style>`, no build step). Deployed to Cloudflare via `wrangler.jsonc` (static assets, serves repo root).
 
 ## Layout of index.html
-Sections in order: nav → hero → about → mission/vision → services → brands → clients → organization (org chart) → contact → footer. All CSS is one inline `<style>` block; responsive breakpoints at 900px and 560px.
+Sections in order: nav → hero → about → mission/vision → services → products → brands → clients → organization (org chart) → contact → footer. All CSS is one inline `<style>` block; responsive breakpoints at 900px and 560px.
 
 ## Design system
 - Palette: cream (`--cream-1 #f7f2e8`, `--cream-2`, `--cream-3`), ink `#29231b`, amber (`#e2a04c`/`#c9852f`/`#a5651b`).
@@ -68,6 +68,13 @@ Three offices as `.office-card`s in an `.offices-grid` (3-col desktop → 2-col 
 ## source-material/ (gitignored + assetsignored — NOT committed, NOT served)
 - `A2S PDF (1).pdf` = company profile, source of truth for all copy.
 - `pages/page-01..10.png` = the PDF rendered to images (each PDF page is a slide). Read these images to re-extract info.
+
+## Products section (#products, after Services) — product PDFs live in `products/` (public)
+- Decision: NO iframe/inline PDF embed (mobile browsers render PDF iframes badly; installers want the file). Each product = a `.prod-card` with 4:3 cover JPG + View (new tab, browser's PDF viewer) + Download (`download` attr with a branded filename). PDFs kept at original size (user chose not to compress).
+- `.prod-grid` uses the same centred-flex pattern as `.svc-grid` (1 card centres; more wrap with no orphans). **To add a product:** copy the `<article class="prod-card">` (HTML comment marks it), drop `products/<slug>-manual.pdf` + `products/<slug>-cover.jpg` (~850x640, ~50 KB), update title/model/desc/meta "PDF • N pages • X MB".
+- Cover thumbnail = embedded photo extracted from PDF page 1 via fitz (raw image xref, no overlaid text), cropped 4:3 with PIL.
+- Current item: Neon Flex In-Ground 2260 SV (PL-NS2260), v4.0, 13 pages, 3.8 MB (was `ATS.pdf.pdf` at root). PDF p13 prints UAE phone as "+970" (site has correct +971); user said ignore.
+- Adding the section flipped backgrounds to keep alternation: Products=white, Brands=cream-2, Clients=white. Nav + footer have a Products link (nav still fits at 861px, just above the 860px drawer breakpoint).
 
 ## Toolchain available
 python3 has PyMuPDF (`fitz`) for PDF→PNG and Playwright (chromium launches OK). `sips`, `qlmanage` present. No poppler/imagemagick. brew + node available. To re-convert the PDF: use fitz to render pages at ~2x zoom to `source-material/pages/`.

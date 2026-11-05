@@ -29,6 +29,7 @@ targets = [
     ("home", "hero"),
     ("about", "about"),
     ("services", "services"),
+    ("products", "products"),
     ("brands", "brands"),
     ("clients", "clients"),
     ("organization", "organization"),

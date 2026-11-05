@@ -318,6 +318,33 @@
     .svc-card h3 { font-family: 'Bricolage Grotesque', sans-serif; font-size: 1.12rem; color: var(--ink); margin-bottom: 8px; letter-spacing: -0.01em; }
     .svc-card p { font-size: 0.92rem; line-height: 1.65; color: var(--body); }
 
+    /* ============ PRODUCTS ============ */
+    /* Same centred-flex pattern as .svc-grid: 1 card centres, 3+ wrap with no orphan gaps. */
+    .prod-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 22px; }
+    .prod-card {
+      flex: 1 1 300px; max-width: 360px; display: flex; flex-direction: column;
+      background: #fff; border: 1px solid rgba(70,58,42,0.10); border-radius: 20px; overflow: hidden;
+      box-shadow: 0 14px 34px -18px rgba(70,58,42,0.28);
+      transition: transform .32s cubic-bezier(.2,.7,.2,1), box-shadow .32s ease, border-color .32s ease;
+    }
+    .prod-card:hover { transform: translateY(-6px); box-shadow: 0 30px 56px -22px rgba(70,58,42,0.32); border-color: rgba(201,133,47,0.4); }
+    .prod-media { display: block; position: relative; aspect-ratio: 4 / 3; overflow: hidden; background: var(--cream-2); }
+    .prod-media img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s cubic-bezier(.2,.7,.2,1); }
+    .prod-card:hover .prod-media img { transform: scale(1.04); }
+    .prod-badge {
+      position: absolute; top: 14px; left: 14px; padding: 6px 11px; border-radius: 999px;
+      font-size: 0.66rem; font-weight: 600; letter-spacing: 1.6px; text-transform: uppercase;
+      color: var(--amber-dp); background: rgba(255,255,255,0.92); box-shadow: 0 6px 16px rgba(40,30,15,0.16);
+    }
+    .prod-body { padding: 24px 26px 26px; display: flex; flex-direction: column; flex: 1; }
+    .prod-body h3 { font-family: 'Bricolage Grotesque', sans-serif; font-size: 1.16rem; color: var(--ink); letter-spacing: -0.01em; line-height: 1.25; }
+    .prod-model { margin-top: 6px; font-size: 0.86rem; font-weight: 500; color: var(--amber-dp); letter-spacing: 0.3px; }
+    .prod-desc { margin-top: 12px; font-size: 0.92rem; line-height: 1.65; color: var(--body); }
+    .prod-meta { margin-top: 14px; font-size: 0.78rem; letter-spacing: 0.4px; color: var(--faint); }
+    .prod-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: auto; padding-top: 20px; }
+    .btn-sm { padding: 11px 20px; font-size: 0.84rem; gap: 8px; }
+    .btn-sm svg { width: 16px; height: 16px; flex: none; }
+
     /* ============ LOGO WALL (brands + clients) ============ */
     .logo-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 18px; }
     .logo-grid.clients { grid-template-columns: repeat(5, minmax(0, 1fr)); }
@@ -560,6 +587,7 @@
     <div class="nav-links" id="navLinks">
       <a href="#about">About</a>
       <a href="#services">Services</a>
+      <a href="#products">Products</a>
       <a href="#brands">Brands</a>
       <a href="#clients">Clients</a>
       <a href="#organization">Organization</a>
@@ -676,8 +704,45 @@
     </div>
   </section>
 
+  <!-- ===================== PRODUCTS ===================== -->
+  <section class="section-pad bg-white" id="products">
+    <div class="container">
+      <div class="section-head center reveal">
+        <div class="kicker" style="justify-content:center;"><span class="rule"></span> Products <span class="rule"></span></div>
+        <h2>Our <span class="accent">products</span>.</h2>
+        <p>Product manuals and technical documents. View them in your browser or download them for use on site.</p>
+      </div>
+
+      <div class="prod-grid reveal">
+        <!-- To add a product: copy this <article>, put the PDF + a 4:3 cover JPG in products/, update text + links. -->
+        <article class="prod-card">
+          <a class="prod-media" href="products/neon-flex-in-ground-2260-manual.pdf" target="_blank" rel="noopener" aria-label="View the Neon Flex In-Ground 2260 SV installation manual (PDF)">
+            <img src="products/neon-flex-in-ground-2260-cover.jpg" alt="Neon Flex strips curving across a polished floor" loading="lazy" width="853" height="639" />
+            <span class="prod-badge">Installation manual</span>
+          </a>
+          <div class="prod-body">
+            <h3>Neon Flex In-Ground 2260 SV</h3>
+            <div class="prod-model">PL-NS2260</div>
+            <p class="prod-desc">Step-by-step drawings for slotting, mounting and concrete-set installation of in-ground neon flex, for straight and curved runs.</p>
+            <div class="prod-meta">PDF &bull; 13 pages &bull; 3.8&nbsp;MB</div>
+            <div class="prod-actions">
+              <a class="btn btn-primary btn-sm" href="products/neon-flex-in-ground-2260-manual.pdf" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+                View
+              </a>
+              <a class="btn btn-outline btn-sm" href="products/neon-flex-in-ground-2260-manual.pdf" download="ATS-Neon-Flex-In-Ground-2260-Manual.pdf">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>
+                Download
+              </a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
   <!-- ===================== BRANDS WE USE ===================== -->
-  <section class="section-pad-sm bg-white" id="brands">
+  <section class="section-pad-sm bg-cream-2" id="brands">
     <div class="container">
       <div class="section-head center compact reveal">
         <div class="kicker" style="justify-content:center;"><span class="rule"></span> Brands We Use <span class="rule"></span></div>
@@ -696,7 +761,7 @@
   </section>
 
   <!-- ===================== OUR CLIENTS ===================== -->
-  <section class="section-pad-sm bg-cream-2" id="clients">
+  <section class="section-pad-sm bg-white" id="clients">
     <div class="container">
       <div class="section-head center compact reveal">
         <div class="kicker" style="justify-content:center;"><span class="rule"></span> Our Clients <span class="rule"></span></div>
@@ -860,6 +925,7 @@
             <h5>Explore</h5>
             <a href="#about">About</a>
             <a href="#services">Services</a>
+            <a href="#products">Products</a>
             <a href="#brands">Brands</a>
             <a href="#clients">Clients</a>
             <a href="#organization">Organization</a>
