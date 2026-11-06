@@ -344,6 +344,32 @@
     .prod-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: auto; padding-top: 20px; }
     .btn-sm { padding: 11px 20px; font-size: 0.84rem; gap: 8px; }
     .btn-sm svg { width: 16px; height: 16px; flex: none; }
+    /* Optional per-product video row. href = the mp4 itself, so it still plays (new tab) without JS. */
+    .prod-video {
+      display: flex; align-items: center; gap: 12px; margin-top: 16px; padding: 10px 14px 10px 10px;
+      border-radius: 14px; background: var(--cream-1); border: 1px solid rgba(70,58,42,0.08);
+      color: var(--ink); font-size: 0.88rem; font-weight: 500; text-decoration: none;
+      transition: background .25s ease, border-color .25s ease;
+    }
+    .prod-video:hover { background: #fff; border-color: rgba(201,133,47,0.45); }
+    .prod-video .play {
+      width: 34px; height: 34px; border-radius: 50%; flex: none; display: grid; place-items: center;
+      background: var(--amber-dp); color: #fff; box-shadow: 0 6px 14px -6px rgba(165,101,27,0.7);
+    }
+    .prod-video .play svg { width: 14px; height: 14px; margin-left: 2px; }
+    .prod-video .dur { margin-left: auto; font-size: 0.78rem; color: var(--faint); font-variant-numeric: tabular-nums; }
+
+    /* Shared video lightbox (native <dialog>, sits in the top layer above nav + welcome popup). */
+    /* margin:auto is needed: the global * { margin:0 } reset otherwise kills the dialog's built-in centring. */
+    .video-modal { margin: auto; border: 0; padding: 0; background: transparent; width: min(92vw, 1040px); max-width: none; overflow: visible; }
+    .video-modal::backdrop { background: rgba(20,15,8,0.82); }
+    .video-modal video { display: block; width: 100%; aspect-ratio: 16 / 9; background: #000; border-radius: 14px; box-shadow: 0 24px 70px rgba(0,0,0,.55); }
+    .video-modal .vm-close {
+      position: absolute; top: -16px; right: -16px; width: 40px; height: 40px; border-radius: 50%; border: 0;
+      background: #fff; color: var(--ink); font-size: 24px; line-height: 1; cursor: pointer; box-shadow: 0 4px 14px rgba(0,0,0,.35);
+    }
+    .video-modal .vm-close:hover { background: #f0f0f0; }
+    @media (max-width: 560px) { .video-modal .vm-close { top: -50px; right: 0; } }
 
     /* ============ LOGO WALL (brands + clients) ============ */
     .logo-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 18px; }
@@ -771,7 +797,7 @@
       <div class="section-head center reveal">
         <div class="kicker" style="justify-content:center;"><span class="rule"></span> Products <span class="rule"></span></div>
         <h2>Our <span class="accent">products</span>.</h2>
-        <p>Product manuals and technical documents. View them in your browser or download them for use on site.</p>
+        <p>Product manuals and installation videos. View them in your browser or download them for use on site.</p>
       </div>
 
       <div class="prod-grid reveal">
@@ -786,6 +812,14 @@
             <div class="prod-model">PL-NS2260</div>
             <p class="prod-desc">Step-by-step drawings for slotting, mounting and concrete-set installation of in-ground neon flex, for straight and curved runs.</p>
             <div class="prod-meta">PDF &bull; 13 pages &bull; 3.8&nbsp;MB</div>
+            <!-- Optional: remove this <a> for products with no video. -->
+            <a class="prod-video" href="products/neon-flex-in-ground-2260-install-video.mp4" target="_blank" rel="noopener"
+               data-video="products/neon-flex-in-ground-2260-install-video.mp4" data-poster="products/neon-flex-in-ground-2260-video-poster.jpg"
+               aria-label="Watch the Neon Flex In-Ground 2260 SV installation video (3 minutes 28 seconds)">
+              <span class="play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l13-7.5z"/></svg></span>
+              Watch installation video
+              <span class="dur">3:28</span>
+            </a>
             <div class="prod-actions">
               <a class="btn btn-primary btn-sm" href="products/neon-flex-in-ground-2260-manual.pdf" target="_blank" rel="noopener">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
@@ -1066,8 +1100,32 @@
     </div>
   </footer>
 
+  <!-- Shared video lightbox, opened by any .prod-video[data-video] link. -->
+  <dialog class="video-modal" id="videoModal" aria-label="Product video">
+    <button type="button" class="vm-close" id="videoModalClose" aria-label="Close video">&times;</button>
+    <video id="videoModalPlayer" controls playsinline preload="none"></video>
+  </dialog>
+
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Product video lightbox. The video loads only on click (preload="none"), so the page stays light.
+    (function () {
+      const modal = document.getElementById('videoModal');
+      const player = document.getElementById('videoModalPlayer');
+      if (!modal || typeof modal.showModal !== 'function') return;   // old browser: link opens the mp4 in a new tab
+      const stop = () => { player.pause(); player.removeAttribute('src'); player.load(); };
+      document.querySelectorAll('.prod-video[data-video]').forEach(a => a.addEventListener('click', e => {
+        e.preventDefault();
+        player.poster = a.dataset.poster || '';
+        player.src = a.dataset.video;
+        modal.showModal();
+        player.play().catch(() => {});
+      }));
+      document.getElementById('videoModalClose').addEventListener('click', () => modal.close());
+      modal.addEventListener('click', e => { if (e.target === modal) modal.close(); });   // click on backdrop
+      modal.addEventListener('close', stop);                                             // also covers Esc
+    })();
 
     // Nav: scrolled state
     const nav = document.getElementById('nav');

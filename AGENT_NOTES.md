@@ -72,14 +72,24 @@ Three offices as `.office-card`s in an `.offices-grid` (3-col desktop → 2-col 
 ## Products section (#products, after Services) — product PDFs live in `products/` (public)
 - Decision: NO iframe/inline PDF embed (mobile browsers render PDF iframes badly; installers want the file). Each product = a `.prod-card` with 4:3 cover JPG + View (new tab, browser's PDF viewer) + Download (`download` attr with a branded filename). PDFs kept at original size (user chose not to compress).
 - `.prod-grid` uses the same centred-flex pattern as `.svc-grid` (1 card centres; more wrap with no orphans). **To add a product:** copy the `<article class="prod-card">` (HTML comment marks it), drop `products/<slug>-manual.pdf` + `products/<slug>-cover.jpg` (~850x640, ~50 KB), update title/model/desc/meta "PDF • N pages • X MB".
+- **Product video (optional per card):** a `.prod-video` row ("Watch installation video" + duration) sits between `.prod-meta` and `.prod-actions`. Its `data-video`/`data-poster` attributes open one shared `<dialog id="videoModal">` lightbox (markup is just above the main `<script>`). The `<video>` uses `preload="none"` and its src is set only on click, so the 24 MB file never loads with the page. On close (X, Esc, or backdrop click) the video pauses and the src is removed. The `href` points to the mp4 itself, so it still plays without JS. Gotcha: `.video-modal` needs `margin:auto`, because the global `* {margin:0}` reset removes the dialog's built-in centring. For a product with no video, delete the `<a class="prod-video">`.
 - Cover thumbnail = embedded photo extracted from PDF page 1 via fitz (raw image xref, no overlaid text), cropped 4:3 with PIL.
 - Current item: Neon Flex In-Ground 2260 SV (PL-NS2260), v4.0, 13 pages, 3.8 MB (was `ATS.pdf.pdf` at root). PDF p13 prints UAE phone as "+970" (site has correct +971); user said ignore.
 - Adding the section flipped backgrounds to keep alternation: Products=white, Brands=cream-2, Clients=white. Nav + footer have a Products link (nav still fits at 861px, just above the 860px drawer breakpoint).
+
+## Rebranding supplier videos (cover their logo with ours)
+- Done once: Potato Lighting "In-Ground Neon Flex Installation Tutorial" (WhatsApp mp4, 1024x576, 30fps, 208 s) → `products/neon-flex-in-ground-2260-install-video.mp4` (24 MB). The original WhatsApp file was deleted at the user's request. Poster = frame at 1.5 s → `products/neon-flex-in-ground-2260-video-poster.jpg`.
+- Badge PNGs: `python3 agent-scripts/video_badge.py <H> <minW> out.png`. Title card used 94x416 at (24,18); small watermark on the rest used 62x214 (renders 240 wide) at (0,30).
+- Find the title-card cut with `select='gt(scene,0.3)',showinfo` (was 3.033 s); switch badges with `enable='lt(t,T)'` / `gte(t,T)`.
+- Encode 2-pass `-b:v 850k -preset slow -c:a copy -movflags +faststart` → 24 MB, which is under Cloudflare's 25 MiB per-file limit. CRF 18 gave 85 MB and CRF 25 gave 41 MB (the source is noisy), so don't use CRF.
+- ffmpeg here has no `drawtext` (no freetype). Draw text in PIL. Keep the pill alpha at 255, because alpha 250 let the old logo ghost through.
+- **wrangler serves the repo root**, so any `.mp4` left in the root deploys publicly unless it is listed in `.assetsignore`.
 
 ## Toolchain available
 python3 has PyMuPDF (`fitz`) for PDF→PNG and Playwright (chromium launches OK). `sips`, `qlmanage` present. No poppler/imagemagick. brew + node available. To re-convert the PDF: use fitz to render pages at ~2x zoom to `source-material/pages/`.
 
 ## Workflow reminders for this repo
+- **Branch is `main` (not master). A collaborator (GitHub `tcr233036`, "TCR") also edits `index.html` via PRs merged on GitHub** — e.g. added #news section (after #organization, bg-cream), a welcome popup (`#welcome-popup`, z-index 2000, shows on load — remove it in Playwright before screenshots), India address change. Run `git fetch && git status` before starting work so local doesn't diverge. Nav now has 8 links (… Products … Organization, News, Contact); still fits at 861px.
 - **You cannot judge alignment/layout from the code alone.** After any visual change, run `agent-scripts/shoot.py` (desktop 1366 + mobile 390), read the PNGs back, and eyeball them. Only then is it "verified". The user reviews the final result only, so this self-check is on you.
 - Use subagents for fan-out work.
 - `.assetsignore` keeps `source-material/`, `agent-scripts/`, and this file out of the public Cloudflare deploy. This file + `agent-scripts/shoot.py` ARE committed to git so future sessions inherit them; `agent-scripts/shots/` and `source-material/` are gitignored.
