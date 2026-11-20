@@ -77,13 +77,25 @@
       border-bottom: 1px solid var(--line);
       padding-top: 8px; padding-bottom: 8px;
     }
-    .nav .brand { display: inline-flex; line-height: 0; }
+    /* Brand lockup: cropped logo mark (logo-mark.png, no whitespace) + tagline centred under it */
+    .nav .brand {
+      display: inline-flex; flex-direction: column; align-items: center; gap: 6px;
+      text-decoration: none; line-height: 1;
+    }
     .nav .brand img {
-      height: 60px; width: auto; mix-blend-mode: multiply;
+      height: 48px; width: auto;
       transition: height .35s ease;
       -webkit-user-select: none; user-select: none;
     }
-    .nav.scrolled .brand img { height: 48px; }
+    .nav.scrolled .brand img { height: 38px; }
+    .brand-tag {
+      display: inline-flex; align-items: center; gap: 8px; white-space: nowrap;
+      font-family: 'Inter', sans-serif; font-size: 0.6rem; font-weight: 600;
+      letter-spacing: 0.8px; text-transform: uppercase; color: var(--ink-2);
+      transition: font-size .35s ease;
+    }
+    .brand-tag i { width: 1px; height: 9px; background: var(--amber); opacity: 0.8; }
+    .nav.scrolled .brand-tag { font-size: 0.56rem; }
     .nav-links { display: flex; align-items: center; gap: clamp(14px, 2vw, 30px); }
     .nav-links a {
       font-size: 0.86rem; font-weight: 500; letter-spacing: 0.2px; color: var(--ink-2);
@@ -556,7 +568,10 @@
       padding: 54px 0 30px;
     }
     .foot-top { display: flex; flex-wrap: wrap; gap: 28px; justify-content: space-between; align-items: flex-start; padding-bottom: 34px; border-bottom: 1px solid rgba(255,255,255,0.08); }
-    .foot-brand img { height: 60px; width: auto; filter: brightness(0) invert(1); opacity: 0.92; }
+    /* same lockup as the nav brand, in white for the dark footer */
+    .foot-lockup { display: inline-flex; flex-direction: column; align-items: center; gap: 8px; }
+    .foot-brand img { height: 46px; width: auto; filter: brightness(0) invert(1); opacity: 0.92; }
+    .foot-brand .brand-tag { color: #cfc6b4; }
     .foot-tag { max-width: 320px; margin-top: 16px; font-size: 0.9rem; line-height: 1.7; color: #8a8272; }
     .foot-cols { display: flex; gap: clamp(34px, 6vw, 80px); flex-wrap: wrap; }
     .foot-col h5 { font-size: 0.72rem; letter-spacing: 2.5px; text-transform: uppercase; color: var(--amber-hi); margin-bottom: 16px; font-weight: 600; }
@@ -596,7 +611,10 @@
       .wm-tridonic { font-size: 1.45rem; }
       .wm-led { font-size: 1.45rem; }
       .wm-meanwell { font-size: 1.2rem; letter-spacing: 1px; }
-      .nav .brand img { height: 48px; }
+      .nav .brand img { height: 38px; }
+      .nav.scrolled .brand img { height: 32px; }
+      .brand-tag, .nav.scrolled .brand-tag { font-size: 0.54rem; letter-spacing: 0.6px; gap: 6px; }
+      .nav .brand { gap: 5px; }
     }
   </style>
 </head>
@@ -665,7 +683,8 @@
   <!-- ===================== NAV ===================== -->
   <nav class="nav" id="nav">
     <a class="brand" href="#home" aria-label="ATS — Ark Design Studio, Technical Services">
-      <img src="logo.jpg" alt="ATS — Ark Design Studio, Technical Services" />
+      <img src="logo-mark.png" alt="ATS — Ark Design Studio, Technical Services" width="316" height="150" />
+      <span class="brand-tag"><span>US Design Excellence</span><i aria-hidden="true"></i><span>UAE Manufacturing</span></span>
     </a>
     <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
       <span></span><span></span><span></span>
@@ -804,7 +823,7 @@
         <!-- To add a product: copy this <article>, put the PDF + a 4:3 cover JPG in products/, update text + links. -->
         <article class="prod-card">
           <a class="prod-media" href="products/neon-flex-in-ground-2260-manual.pdf" target="_blank" rel="noopener" aria-label="View the Neon Flex In-Ground 2260 SV installation manual (PDF)">
-            <img src="products/neon-flex-in-ground-2260-cover.jpg" alt="Neon Flex strips curving across a polished floor" loading="lazy" width="853" height="639" />
+            <img src="products/neon-flex-in-ground-2260-cover.jpg" alt="ATSlightinc 2835-120-24V LED strip on a reel" loading="lazy" width="853" height="640" />
             <span class="prod-badge">Installation manual</span>
           </a>
           <div class="prod-body">
@@ -1069,7 +1088,10 @@
     <div class="container">
       <div class="foot-top">
         <div class="foot-brand">
-          <img src="logo.jpg" alt="ATS — Ark Design Studio, Technical Services" />
+          <div class="foot-lockup">
+            <img src="logo-mark.png" alt="ATS — Ark Design Studio, Technical Services" width="316" height="150" loading="lazy" />
+            <span class="brand-tag"><span>US Design Excellence</span><i aria-hidden="true"></i><span>UAE Manufacturing</span></span>
+          </div>
           <p class="foot-tag">Lighting, design &amp; technical services that give every space its glow.
             Architectural, decorative, facade, landscape &amp; industrial lighting : from concept to completion.</p>
         </div>
